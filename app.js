@@ -82,6 +82,10 @@ app.get("/plant-map", checkAuthentication, (req, res) => {
     res.send(html);
 });
 
+app.get("/my-plants", checkAuthentication, (req, res) => {
+    res.render("my-plants")
+})
+
 app.use("/plant-game", gameManager);
 
 app.get("/logout", (req, res) => {
