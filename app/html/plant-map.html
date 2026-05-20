@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BeWilder</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { height: 100dvh; display: flex; flex-direction: column; }
@@ -39,7 +38,7 @@
     display: none;
   }
 
-  /* ── PLANT DETAIL PANEL ── */
+
   #detail-panel {
     position: fixed;
     inset: 0;
@@ -146,7 +145,7 @@
     text-decoration: underline;
   }
 
-  /* ── NEARBY DRAWER ── */
+
   #drawer {
     position: absolute;
     bottom: 0; left: 0; right: 0;
@@ -171,7 +170,7 @@
   .drawer-item-sci { font-size: 0.75rem; color: #666; font-style: italic; }
   .drawer-item-date { font-size: 0.72rem; color: #999; margin-top: 2px; }
 
-  /* ── WELCOME / WALKTHROUGH ── */
+
   #welcome-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.5);
@@ -211,10 +210,10 @@
 <body>
 
 <nav>
-  <strong>BeWilder</strong>
-  <a href="#" id="nav-home">Home</a>
-  <a href="#" id="nav-scan">Scan Plant</a>
-  <a href="#" id="nav-berry">Berry Guess</a>
+  <strong><a href="/home">BeWilder</a></strong>
+  <a href="/home" id="nav-home">Home</a>
+  <a href="/plant-scan" id="nav-scan">Scan Plant</a>
+  <a href="/plant-game" id="nav-berry">Berry Guess</a>
 </nav>
 
 <div id="map"></div>
@@ -223,7 +222,6 @@
 <button id="view-nearby-btn">View Plants Nearby</button>
 <button id="hint-toggle">Guide</button>
 
-<!-- Plant Detail Panel -->
 <div id="detail-panel">
   <div id="detail-header">
     <button id="detail-back">&gt; Back</button>
@@ -245,7 +243,7 @@
   </div>
 </div>
 
-<!-- Nearby Drawer -->
+
 <div id="drawer">
   <div id="drawer-header">
     <strong>Nearby Plants</strong>
@@ -254,7 +252,7 @@
   <div id="drawer-list"></div>
 </div>
 
-<!-- Welcome Modal -->
+
 <div id="welcome-overlay">
   <div id="welcome-modal">
     <h2>Welcome to BeWilder</h2>
@@ -276,7 +274,7 @@
 <script>
 const isFirstVisit = !localStorage.getItem('BeWilder_visited');
 
-// ── MAP ──
+
 const map = L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors', maxZoom: 19,
@@ -286,11 +284,7 @@ let userCenter = [49.2827, -123.1207];
 map.setView(userCenter, 14);
 let allObservations = [];
 
-// ── EDIBILITY DATABASE ──
-// Keyed by iNaturalist taxon ID
-// Add more as needed: https://www.inaturalist.org/taxa/<name>
 const EDIBILITY = {
-  // Edible
   47602:  'edible',   // Stinging Nettle
   60218:  'edible',   // Wild Blackberry
   76958:  'edible',   // Dandelion
@@ -326,14 +320,12 @@ const EDIBILITY = {
 function getEdibilityTag(obs, wikiText = '') {
   const taxonId = obs.taxon?.id;
 
-  // Tier 1: check lookup table
   if (taxonId && EDIBILITY[taxonId]) {
     const e = EDIBILITY[taxonId];
     if (e === 'edible') return { label: 'Edible',    cls: 'tag-edible' };
     if (e === 'toxic')  return { label: 'Toxic',     cls: 'tag-toxic'  };
   }
 
-  // Tier 2: scan wikipedia summary for keywords
   const text = wikiText.toLowerCase();
   const edibleKeywords = ['edible', 'eaten', 'food plant', 'forage', 'culinary', 'consumed', 'harvested for food'];
   const toxicKeywords  = ['toxic', 'poisonous', 'poison', 'fatal', 'lethal', 'dangerous if ingested', 'harmful'];
@@ -344,7 +336,7 @@ function getEdibilityTag(obs, wikiText = '') {
 }
 
 function getSeasonTag() {
-  const month = new Date().getMonth(); // current month, 0-indexed
+  const month = new Date().getMonth();
   const season =
     month >= 2 && month <= 4 ? 'Spring' :
     month >= 5 && month <= 7 ? 'Summer (Peak Season)' :
@@ -352,7 +344,6 @@ function getSeasonTag() {
   return { label: season, cls: 'tag-season' };
 }
 
-// ── DETAIL PANEL ──
 const detailPanel = document.getElementById('detail-panel');
 
 async function openDetail(obs) {
@@ -363,12 +354,10 @@ async function openDetail(obs) {
   const url     = `https://www.inaturalist.org/observations/${obs.id}`;
   const taxonId = obs.taxon?.id;
 
-  // Header
   document.getElementById('detail-title').textContent = name;
   document.getElementById('detail-name').textContent  = name;
   document.getElementById('detail-sci').textContent   = sci;
 
-  // Photo
   const photoEl = document.getElementById('detail-photo');
   if (photo) {
     photoEl.innerHTML = `<img src="${photo}" alt="${name}">`;
@@ -389,17 +378,14 @@ async function openDetail(obs) {
 
   detailPanel.classList.add('open');
 
-  // Fetch full taxon info for the wikipedia summary
   if (taxonId) {
     try {
       const res  = await fetch(`https://api.inaturalist.org/v1/taxa/${taxonId}`);
       const data = await res.json();
       const wiki = data.results?.[0]?.wikipedia_summary;
-      // Strip any HTML tags that might come back in the summary
       const clean = wiki ? wiki.replace(/<[^>]+>/g, '') : 'No description available for this species.';
       document.getElementById('detail-description').textContent = clean;
 
-      // Re-check edibility from full taxon data too
       const fullObs = { ...obs, taxon: { ...obs.taxon, wikipedia_summary: clean } };
       const updatedEdibility = getEdibilityTag(fullObs, clean);
       tagsEl.innerHTML = `<span class="detail-tag ${updatedEdibility.cls}">${updatedEdibility.label}</span>`;
@@ -418,7 +404,6 @@ document.getElementById('detail-back').addEventListener('click', () => {
   detailPanel.classList.remove('open');
 });
 
-// ── LOAD PLANTS ──
 async function loadPlants(lat, lng) {
   const loading     = document.getElementById('loading');
   const errorBanner = document.getElementById('error-banner');
@@ -466,7 +451,6 @@ async function loadPlants(lat, lng) {
   }
 }
 
-// Store markers keyed by obs id so we can open their popups
 const markerMap = {};
 
 function addPin(obs) {
@@ -489,7 +473,6 @@ function addPin(obs) {
   markerMap[obs.id] = marker;
 }
 
-// Global so the inline onclick can reach it
 window._openDetail = (id) => {
   const obs = allObservations.find(o => o.id === id);
   if (obs) openDetail(obs);
@@ -501,7 +484,6 @@ function showError(msg) {
   banner.style.display = 'block';
 }
 
-// ── NEARBY DRAWER ──
 const drawer = document.getElementById('drawer');
 
 function openDrawer() {
@@ -537,7 +519,6 @@ function openDrawer() {
       if (obs.location) {
         const [lat, lng] = obs.location.split(',').map(Number);
         map.flyTo([lat, lng], 17, { duration: 1 });
-        // Open the marker popup after the fly animation
         setTimeout(() => {
           const marker = markerMap[obs.id];
           if (marker) marker.openPopup();
@@ -551,14 +532,13 @@ function openDrawer() {
 document.getElementById('view-nearby-btn').addEventListener('click', openDrawer);
 document.getElementById('drawer-close').addEventListener('click', () => drawer.classList.remove('open'));
 
-// ── GEOLOCATION ──
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(pos => {
     userCenter = [pos.coords.latitude, pos.coords.longitude];
     map.setView(userCenter, 15);
     L.circleMarker(userCenter, {
       radius: 10, fillColor: '#4285F4', fillOpacity: 1, color: '#fff', weight: 3,
-    }).addTo(map).bindPopup('📍 You are here');
+    }).addTo(map).bindPopup('You are here');
     loadPlants(...userCenter);
   }, () => {
     showError('Location unavailable. Showing plants near Vancouver.');
@@ -574,7 +554,6 @@ map.on('moveend', () => {
   loadPlants(c.lat, c.lng);
 });
 
-// ── WALKTHROUGH ──
 const steps = [
   { text: "These pins show real plant sightings near you. Tap one to learn more." },
   { text: "Use 'Scan Plant' to identify a plant using your camera." },
