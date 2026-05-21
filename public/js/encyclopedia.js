@@ -12,6 +12,9 @@ async function renderPlants() {
                     <h2 class="text-xl font-bold">${plant.name}</h2>
                     <p class="text-sm text-gray-500">${plant.type}</p>
                     <p class="mt-2">${plant.description}</p>
+                    <p class="mt-2 text-sm font-semibold text-green-700">
+                        Season: ${plant.seasonalAvailability}
+                    </p>
                 </div>
             `;
         });

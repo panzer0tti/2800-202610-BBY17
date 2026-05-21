@@ -1,12 +1,82 @@
 [
-  { "id": 1, "name": "Monstera Deliciosa", "type": "Indoor / Tropical", "description": "Famous for its iconic natural leaf holes. Thrives in bright, indirect sunlight.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 2, "name": "Snake Plant", "type": "Indoor / Succulent", "description": "An incredibly hardy plant that purifies the air and survives in low light.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 3, "name": "Pothos", "type": "Indoor / Vine", "description": "Fast-growing trailing vine featuring heart-shaped, variegated green leaves.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 4, "name": "Fiddle Leaf Fig", "type": "Indoor / Tree", "description": "A popular statement plant with large, glossy, violin-shaped structural leaves.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 5, "name": "Aloe Vera", "type": "Medicinal / Succulent", "description": "Known for the soothing gel inside its thick, fleshy, serrated green leaves.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 6, "name": "Spider Plant", "type": "Indoor / Air Purifier", "description": "Produces long, narrow arching leaves with dangling baby plantlets.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 7, "name": "Peace Lily", "type": "Indoor / Flowering", "description": "Features deep green foliage and striking, elegant hooded white blooms.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 8, "name": "Boston Fern", "type": "Outdoor / Fern", "description": "Thrives in high humidity with feather-like, classic sprawling fronds.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 9, "name": "Lavender", "type": "Outdoor / Herb", "description": "An aromatic shrub producing clusters of fragrant, soothing purple flowers.", "image": "/img/plants/placeholder.jpg" },
-  { "id": 10, "name": "Rosemary", "type": "Outdoor / Perennial Herb", "description": "A fragrant, needle-like evergreen herb widely utilized in culinary dishes.", "image": "/img/plants/placeholder.jpg" }
+  { 
+    "id": 1, 
+    "name": "Monstera Deliciosa", 
+    "type": "Indoor / Tropical", 
+    "description": "Famous for its iconic natural leaf holes. Thrives in bright, indirect sunlight.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Year-round" 
+  },
+  { 
+    "id": 2, 
+    "name": "Snake Plant", 
+    "type": "Indoor / Succulent", 
+    "description": "An incredibly hardy plant that purifies the air and survives in low light.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Year-round"
+  },
+  { 
+    "id": 3, 
+    "name": "Pothos", 
+    "type": "Indoor / Vine", 
+    "description": "Fast-growing trailing vine featuring heart-shaped, variegated green leaves.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Year-round"
+  },
+  { 
+    "id": 4, 
+    "name": "Fiddle Leaf Fig", 
+    "type": "Indoor / Tree", 
+    "description": "A popular statement plant with large, glossy, violin-shaped structural leaves.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Spring to Summer"
+  },
+  { 
+    "id": 5, 
+    "name": "Aloe Vera", 
+    "type": "Medicinal / Succulent", 
+    "description": "Known for the soothing gel inside its thick, fleshy, serrated green leaves.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Spring to Fall"
+  },
+  { 
+    "id": 6, 
+    "name": "Spider Plant", 
+    "type": "Indoor / Air Purifier", 
+    "description": "Produces long, narrow arching leaves with dangling baby plantlets.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Year-round"
+  },
+  { 
+    "id": 7, 
+    "name": "Peace Lily", 
+    "type": "Indoor / Flowering", 
+    "description": "Features deep green foliage and striking, elegant hooded white blooms.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Spring to Fall"
+  },
+  { 
+    "id": 8, 
+    "name": "Boston Fern", 
+    "type": "Outdoor / Fern", 
+    "description": "Thrives in high humidity with feather-like, classic sprawling fronds.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Spring to Summer"
+  },
+  { 
+    "id": 9, 
+    "name": "Lavender", 
+    "type": "Outdoor / Herb", 
+    "description": "An aromatic shrub producing clusters of fragrant, soothing purple flowers.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Summer"
+  },
+  { 
+    "id": 10, 
+    "name": "Rosemary", 
+    "type": "Outdoor / Perennial Herb", 
+    "description": "A fragrant, needle-like evergreen herb widely utilized in culinary dishes.", 
+    "image": "/img/plants/placeholder.jpg",
+    "seasonalAvailability": "Spring to Fall"
+  }
 ]
