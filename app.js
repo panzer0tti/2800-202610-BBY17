@@ -146,9 +146,9 @@ app.get("/plant-scan", checkAuthentication, (req, res) => {
 // Plant Scan API Route
 app.post("/scanningPlant", checkAuthentication, upload.single('plantImage'), apiScan);
 
-// Static Encyclopedia Page HTML Route
+// Encyclopedia Page Route
 app.get("/encyclopedia", checkAuthentication, (req, res) => {
-  HTMLRender(res, "encyclopedia.html");
+  renderPage(req, res, "encyclopedia", "Plant Encyclopedia", ["encyclopedia.css"], ["encyclopedia.js"]);
 });
 
 // Plant Games Page Route
