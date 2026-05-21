@@ -142,8 +142,10 @@ app.get("/plant-map", checkAuthentication, (req, res) => {
 app.get("/plant-scan", checkAuthentication, (req, res) => {
   renderPage(req, res, "plant-scan", "Scan Plant", ["plant-scan.css"], ["plant-scan.js"]);
 });
+
+// My Plants Page Route
 app.get("/my-plants", checkAuthentication, (req, res) => {
-    res.render("my-plants")
+    renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
 })
 
 app.use("/plant-game", gameManager);

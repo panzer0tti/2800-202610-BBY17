@@ -21,9 +21,9 @@
 
         <link href="/css/navbar.css" rel="stylesheet">
 
-        <% if (typeof extraCss !== "undefined") { %>
-            <% extraCss.forEach(function (cssFile) { %>
-                <link href="<%= cssFile %>" rel="stylesheet">
+        <% if (locals.cssFiles) { %>
+            <% cssFiles.forEach(file => { %>
+                <link href="/css/<%= file %>" rel="stylesheet"/>
             <% }) %>
         <% } %>
     </head>
@@ -49,29 +49,20 @@
                     id="navbarNav"
                 >
                     <ul class="navbar-nav me-auto py-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/home">
-                                Home
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/my-plants">
-                                My Plants
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/plant-map">
-                                Map
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/plant-game">
-                                Games
-                            </a>
-                        </li>
+                        <% const links = user ? locals.navLinksAuth : locals.navLinksUnauth %>
+                        <% for (let link of links) { %>
+                            <li class="nav-item">
+                                <% if (link.name === "Logout") { %>
+                                    <a class="nav-link btn btn-danger rounded-pill px-3" href="<%= link.url %>">
+                                        <%= link.name %>
+                                    </a>
+                                <% } else { %>
+                                    <a class="nav-link <%= link.url === locals.folder ? 'active' : '' %>" href="<%= link.url %>">
+                                        <%= link.name %>
+                                    </a>
+                                <% } %>
+                            </li>
+                        <% } %>
                     </ul>
                 </div>
 
