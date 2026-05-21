@@ -10,13 +10,21 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
-    <link href="/css/navbar.css" rel="stylesheet" />
+    <link href="/tailwindOutput.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Global CSS Files -->
+    <link href="/css/theme.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
 
     <!-- Custom CSS for Each Page -->
-    <% if (cssFiles && cssFiles.length > 0) { %> <% cssFiles.forEach(file => {
-    %>
-    <link href="/css/<%= file %>" rel="stylesheet" />
-    <% }) %>
+    <% if (locals.cssFiles) { %>
+        <% cssFiles.forEach(file => { %>
+            <link href="/css/<%= file %>" rel="stylesheet"/>
+        <% }) %>
     <% } %>
   </head>
   <body>
