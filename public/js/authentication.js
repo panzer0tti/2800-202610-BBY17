@@ -8,7 +8,9 @@ const expireTime = 60 * 60 * 1000;
 const mongodb_database = process.env.MONGODB_DATABASE;
 
 const {database} = require('./mongoDBConnection');
+const {renderPage} = require('./appHelper');
 const userCollection = database.db(mongodb_database).collection('users');
+const loginHistory = database.db(mongodb_database).collection('login_history');
 
 async function signupSubmit(req, res) {
     var name = req.body.name;
@@ -43,6 +45,7 @@ async function signupSubmit(req, res) {
     const hashedAnswer = await bcrypt.hash(answer, saltRounds);
     await userCollection.insertOne({name: name.trim(), email: email, password: hashedPassword, question: question, answer: hashedAnswer, firstTime: true});
 
+    addLoginSessionEvent(email);
     makeNewSession(req, name.trim(), email, true);
     res.redirect('/home');
 }
@@ -79,6 +82,7 @@ async function loginSubmit(req, res) {
 
         const sessionName = result[0].name;
         const sessionEmail = result[0].email;
+        addLoginSessionEvent(sessionEmail);
         makeNewSession(req, sessionName, sessionEmail, false);
         res.redirect('/home');
     } else {
@@ -121,6 +125,7 @@ async function backupLoginSubmit(req, res) {
     if (await bcrypt.compare(answer, result[0].answer)) {
         const sessionName = result[0].name;
         const sessionEmail = result[0].email;
+        addLoginSessionEvent(sessionEmail);
         makeNewSession(req, sessionName, sessionEmail, false);
         res.redirect('/home');
     } else {
@@ -207,4 +212,39 @@ function makeNewSession(req, name, email, firstTime) {
     req.session.cookie.maxAge = expireTime;
 }
 
-module.exports = {signupSubmit, loginSubmit, backupLoginSubmit, sendErrorMessage};
+async function addLoginSessionEvent(email) {
+    await loginHistory.insertOne({email: email, loginDate: new Date(), dateString: formatCurrentTime()});
+}
+
+function formatCurrentTime() {
+    const currentTime = new Date();
+    return currentTime.toLocaleString("en-US", {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+async function displayLoginHistory(req, res) {
+    const email = req.session.email;
+    const pastLogins = await loginHistory.find({email: email}).sort({loginDate: -1}).toArray();
+    const loginDates = pastLogins.map(entry => entry.dateString);
+
+    renderPage(req, res, "login-history", "Login History", [], [], loginDates);
+}
+
+async function deleteAccount(req, res) {
+    const email = req.session.email;
+    if (email) {
+        await userCollection.deleteOne({email: email});
+        await loginHistory.deleteMany({email: email}); 
+    }
+    
+    req.session.destroy();
+    res.redirect("/");
+}
+
+module.exports = {signupSubmit, loginSubmit, backupLoginSubmit, sendErrorMessage, displayLoginHistory, deleteAccount};

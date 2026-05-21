@@ -1,0 +1,31 @@
+<%- include("templates/header", {title: title, user: user}) %>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                <div class="d-flex align-items-center mb-4">
+                    <a href="/settings" class="btn btn-outline-secondary btn-sm me-3">&lt; Back</a>
+                    <h2 class="mb-0 text-center flex-grow-1 pe-5 fw-bold">Login History</h2>
+                </div>
+                <% if (locals.userData && userData.length > 0) { %>
+                    <div class="list-group shadow-sm">
+                        <% for (let i = 0; i < userData.length; i++) { 
+                            const dateString = userData[i] %>
+                            <div class="list-group-item p-3 <%= i === 0 ? 'bg-light' : '' %>">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h6 class="mb-0 fw-bold <%= i === 0 ? 'text-success' : 'text-secondary' %>">
+                                        <%= i === 0 ? 'Latest Session' : 'Past Session' %>
+                                    </h6>
+                                    <small class="text-muted fw-medium"><%= dateString %></small>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-secondary text-center shadow-sm" role="alert">
+                        No login history records found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+<%- include("templates/footer") %>
