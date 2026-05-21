@@ -102,7 +102,7 @@ uploadInput.addEventListener('change', async (event) => {
         console.error(err);
         document.getElementById('plant-name').innerText = "No results";
         
-        // Reveal the Try Again button here too if an uploaded file fails
+        // Reveal the Try Again button here too if an uploaded file is invalid
         document.getElementById('try-again-btn').style.display = 'inline-block';
     }
 });
