@@ -3,7 +3,7 @@ const router = express.Router();
 
 const PlantName = require("./plantName");
 const PlantInfo = require("./plantInfo");
-const { sendErrorMessage } = require("./authentication");
+const {sendErrorMessage} = require("./authentication")
 
 async function getRandomPlant(req) {
   if (!req.session.usedPlants) {
@@ -27,6 +27,8 @@ async function getRandomPlant(req) {
       plant = candidate;
       break;
     }
+
+    attempts++;
   }
 
   if (!plant) {
@@ -73,14 +75,7 @@ router.get("/", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    sendErrorMessage(
-      req,
-      res,
-      "Error - Failed Quiz Loading",
-      ["Loading Quiz Failed"],
-      "/plant-game",
-      "Games",
-    );
+    sendErrorMessage(req, res, "Error - Failed Quiz Loading", ["Loading Quiz Failed"], "/plant-game", "Games");
   }
 });
 
@@ -127,14 +122,7 @@ router.post("/guess", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    sendErrorMessage(
-      req,
-      res,
-      "Error - Failed Quiz Check",
-      ["Failed User Guess Check"],
-      "/plant-game",
-      "Games",
-    );
+    sendErrorMessage(req, res, "Error - Failed Quiz Check", ["Failed User Guess Check"], "/plant-game", "Games");
   }
 });
 

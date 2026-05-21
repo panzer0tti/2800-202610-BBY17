@@ -18,7 +18,7 @@
         <!-- Plant Image -->
         <div class="text-center mb-4">
             <img
-                src="/img/plants/<%= plant.imageUrl %>"
+                src="<%= plant.imageUrl || '/img/placeholder.jpg' %>"
                 alt="Plant Image"
                 class="img-fluid rounded-4"
                 style="max-height: 350px; object-fit: cover;"

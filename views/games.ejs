@@ -1,51 +1,36 @@
-<%- include("templates/header.ejs", {title: title, user: user} )%>
+<%- include("templates/header", {title: title, user: user}) %>
+<div class="container tw-py-10 tw-space-y-10">
 
-<%
-  let xpClass = "xp-low";
-  if (xpPercentage > 80) xpClass = "xp-high";
-  else if (xpPercentage > 40) xpClass = "xp-mid";
-%>
-
-<div class="container py-5 game-page">
-
-  <!-- LEVEL / XP CARD -->
-  <div class="row justify-content-center">
+  <!-- LEVEL CARD -->
+  <div class="row tw-justify-center">
     <div class="col-md-8">
 
-      <div class="card game-card game-card-primary p-4">
+      <div class="card tw-p-6 tw-shadow-lg tw-text-center tw-rounded-2xl tw-border-0">
 
-        <h2 class="level-title mb-4">
+        <h2 class="tw-mb-4 tw-font-bold tw-text-3xl tw-text-green-800">
           Level: <%= player.level %>
         </h2>
 
-        <!-- XP BAR -->
-        <div class="xp-container <%= xpClass %>">
+        <!-- EXP Bar -->
+        <div class="tw-relative">
 
-          <div class="progress xp-progress">
+          <!-- Progress Bar Background -->
+          <div class="progress tw-rounded-full" style="height: 35px;">
             <div
-              class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
               style="width: <%= xpPercentage %>%"
-              role="progressbar"
-              aria-valuenow="<%= xpPercentage %>"
-              aria-valuemin="0"
-              aria-valuemax="100"
             ></div>
           </div>
 
-          <!-- XP TEXT -->
-          <div class="xp-text">
-            <div class="xp-text-inner">
-              <span class="xp-current"><%= player.currentXP %></span>
-              <span class="xp-divider">/</span>
-              <span class="xp-max"><%= player.xpForNextLevel %></span>
-              <span class="xp-label">EXP</span>
-            </div>
+          <!-- Progress Bar Centered Text -->
+          <div class="tw-absolute tw-top-1/2 tw-left-1/2 tw-transform tw--translate-x-1/2 tw--translate-y-1/2 
+                      tw-font-bold tw-text-white tw-text-sm">
+            <%= player.currentXP %> / <%= player.xpForNextLevel %> EXP
           </div>
 
         </div>
 
-        <!-- REMAINING XP -->
-        <p class="xp-remaining mt-3">
+        <p class="tw-mt-4 tw-text-gray-500">
           <%= remainingXP %> EXP until next level
         </p>
 
@@ -54,48 +39,51 @@
   </div>
 
   <!-- GAME ACTIONS -->
-  <div class="row justify-content-center mt-4">
+  <div class="row tw-justify-center">
     <div class="col-md-8">
 
-      <div class="card game-card game-card-secondary p-4">
+      <div class="card tw-shadow-lg tw-border-0 tw-rounded-2xl tw-p-6 tw-text-center">
 
-        <!-- GAME BUTTONS -->
-        <div class="d-flex flex-column gap-3 align-items-center">
+        <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
 
-          <button class="game-btn-primary">
+          <button class="game-btns tw-font-bold tw-py-2 tw-px-4 tw-rounded-lg tw-transition hover:tw-scale-105">
             New Ranked Match Session
           </button>
 
-          <a href="/plant-game/guess-plants" class="game-btn-secondary">
+          <a
+            href="/plant-game/guess-plants"
+            class="game-btns tw-font-bold tw-py-2 tw-px-4 tw-rounded-lg tw-inline-block tw-no-underline 
+                   tw-transition hover:tw-scale-105"
+          >
             Plant Knowledge Review
           </a>
 
         </div>
 
-        <!-- MATCH HISTORY TITLE -->
-        <h2 class="history-title mt-4">
+        <h2 class="tw-font-bold tw-text-4xl tw-mt-6 tw-text-green-900">
           Match History
         </h2>
 
-        <!-- MATCH LIST -->
         <% if (matches && matches.length > 0) { %>
 
-          <div class="mt-3 d-flex flex-column gap-3">
+          <div class="tw-mt-4 tw-space-y-3">
 
             <% matches.forEach(match => { %>
-              <div class="card game-card game-card-elevated p-3">
+
+              <div class="card tw-border-0 tw-shadow-sm tw-rounded-xl tw-p-4 hover:tw-shadow-md tw-transition">
                 <div class="card-body">
-                  <h3 class="match-title">
+                  <h3 class="tw-text-lg tw-font-semibold">
                     <%= match.name %>
                   </h3>
                 </div>
               </div>
+
             <% }) %>
 
           </div>
 
         <% } else { %>
-          <p class="text-muted mt-3">
+          <p class="tw-text-gray-500 tw-mt-4">
             No match found.
           </p>
         <% } %>
@@ -106,5 +94,4 @@
   </div>
 
 </div>
-
-<%- include("templates/footer.ejs") %>
+<%- include("templates/footer"); %>
