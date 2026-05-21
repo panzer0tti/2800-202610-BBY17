@@ -5,20 +5,22 @@ async function renderPlants() {
     const container = document.getElementById('plantContainer');
 
     function displayPlants(data) {
-        container.innerHTML = '';
-        data.forEach(plant => {
-            container.innerHTML += `
-                <div class="bg-white p-4 rounded-lg shadow plant-card">
-                    <h2 class="text-xl font-bold">${plant.name}</h2>
-                    <p class="text-sm text-gray-500">${plant.type}</p>
-                    <p class="mt-2">${plant.description}</p>
-                    <p class="mt-2 text-sm font-semibold text-green-700">
-                        Season: ${plant.seasonalAvailability}
-                    </p>
-                </div>
-            `;
-        });
-    }
+    container.innerHTML = '';
+    data.forEach(plant => {
+        container.innerHTML += `
+            <div class="bg-white p-4 rounded-lg shadow plant-card">
+                <img src="${plant.image}" alt="${plant.name}" class="w-full h-48 object-cover rounded-md mb-4">
+                
+                <h2 class="text-xl font-bold">${plant.name}</h2>
+                <p class="text-sm text-gray-500">${plant.type}</p>
+                <p class="mt-2">${plant.description}</p>
+                <p class="mt-2 text-sm font-semibold text-green-700">
+                    Season: ${plant.seasonalAvailability}
+                </p>
+            </div>
+        `;
+    });
+}
 
     displayPlants(plants);
 
