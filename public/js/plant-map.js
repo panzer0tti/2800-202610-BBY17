@@ -1,279 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BeWilder</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { height: 100dvh; display: flex; flex-direction: column; }
-  nav { padding: 8px 12px; border-bottom: 1px solid #ccc; display: flex; gap: 12px; align-items: center; }
-  nav strong { margin-right: auto; }
-  nav a { text-decoration: none; color: #333; font-size: 0.9rem; }
-  #map { flex: 1; }
-  #view-nearby-btn { position: absolute; bottom: 16px; left: 16px; right: 16px; z-index: 900; padding: 12px; font-size: 1rem; cursor: pointer; }
-
-  #loading {
-    position: absolute;
-    top: 52px; left: 50%; transform: translateX(-50%);
-    z-index: 1000;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 6px 12px;
-    font-size: 0.8rem;
-    display: none;
-    white-space: nowrap;
-  }
-  #error-banner {
-    position: absolute;
-    top: 52px; left: 16px; right: 16px;
-    z-index: 1000;
-    background: #fff3cd;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    display: none;
-  }
-
-
-  #detail-panel {
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    overflow-y: auto;
-  }
-  #detail-panel.open { transform: translateX(0); }
-
-  #detail-header {
-    display: flex;
-    align-items: center;
-    padding: 10px 14px;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 1;
-  }
-  #detail-back {
-    background: none;
-    border: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-    color: #333;
-    margin-right: auto;
-    padding: 4px 0;
-  }
-  #detail-title {
-    font-weight: bold;
-    font-size: 1rem;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  #detail-photo {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    background: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-    flex-shrink: 0;
-  }
-  #detail-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  #detail-body {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  #detail-name { font-size: 1.4rem; font-weight: bold; }
-  #detail-sci  { font-size: 0.9rem; color: #666; font-style: italic; margin-top: 2px; }
-
-  #detail-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .detail-tag {
-    padding: 5px 14px;
-    border-radius: 20px;
-    background: #eee;
-    font-size: 0.8rem;
-    font-style: italic;
-  }
-  .tag-edible   { background: #d4edda; color: #155724; }
-  .tag-season   { background: #fff3cd; color: #856404; }
-  .tag-toxic    { background: #f8d7da; color: #721c24; }
-  .tag-unknown  { background: #eee;    color: #555; }
-
-  #detail-info-header {
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 6px;
-  }
-  #detail-description {
-    font-size: 0.9rem;
-    color: #444;
-    line-height: 1.6;
-  }
-  #detail-meta {
-    font-size: 0.8rem;
-    color: #999;
-  }
-  #detail-link {
-    font-size: 0.85rem;
-    color: #333;
-    text-decoration: underline;
-  }
-
-
-  #drawer {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    z-index: 950;
-    background: #fff;
-    border-top: 1px solid #ccc;
-    max-height: 60dvh;
-    display: flex; flex-direction: column;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-  }
-  #drawer.open { transform: translateY(0); }
-  #drawer-header { padding: 10px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-  #drawer-close { background: none; border: none; font-size: 1rem; cursor: pointer; }
-  #drawer-list { overflow-y: auto; }
-  .drawer-item { padding: 10px 12px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; gap: 10px; align-items: center; }
-  .drawer-item:hover { background: #f5f5f5; }
-  .drawer-item img { width: 48px; height: 48px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
-  .drawer-item-img-placeholder { width: 48px; height: 48px; background: #eee; border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
-  .drawer-item-info { flex: 1; }
-  .drawer-item-name { font-size: 0.9rem; font-weight: bold; }
-  .drawer-item-sci { font-size: 0.75rem; color: #666; font-style: italic; }
-  .drawer-item-date { font-size: 0.72rem; color: #999; margin-top: 2px; }
-
-
-  #welcome-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 2000;
-    display: flex; align-items: center; justify-content: center;
-  }
-  #welcome-modal {
-    background: #fff; border: 1px solid #ccc;
-    padding: 24px; max-width: 320px; width: 90%; border-radius: 6px;
-  }
-  #welcome-modal h2 { margin-bottom: 8px; }
-  #welcome-modal p  { font-size: 0.9rem; color: #444; margin-bottom: 16px; line-height: 1.5; }
-  #welcome-modal .btn-row { display: flex; gap: 8px; justify-content: flex-end; }
-  #welcome-modal button { padding: 8px 14px; cursor: pointer; font-size: 0.85rem; }
-  #welcome-start { background: #333; color: #fff; border: none; border-radius: 3px; }
-  #welcome-skip  { background: none; border: 1px solid #ccc; border-radius: 3px; }
-
-  #walkthrough-bar {
-    position: fixed; bottom: 70px; left: 16px; right: 16px;
-    z-index: 1600; background: #fff; border: 1px solid #ccc;
-    border-radius: 4px; padding: 10px 14px;
-    display: none; align-items: center; gap: 10px; font-size: 0.85rem;
-  }
-  #walkthrough-bar.active { display: flex; }
-  #wt-text { flex: 1; color: #333; }
-  #wt-next { padding: 6px 12px; cursor: pointer; background: #333; color: #fff; border: none; border-radius: 3px; font-size: 0.8rem; }
-  #wt-skip { padding: 6px 10px; cursor: pointer; background: none; border: 1px solid #ccc; border-radius: 3px; font-size: 0.8rem; }
-  #wt-progress { font-size: 0.75rem; color: #999; white-space: nowrap; }
-
-  #hint-toggle {
-    position: fixed; top: 52px; right: 8px; z-index: 1000;
-    font-size: 0.7rem; padding: 4px 8px; cursor: pointer;
-    background: #fff; border: 1px solid #ccc; border-radius: 3px; display: none;
-  }
-</style>
-</head>
-<body>
-
-<nav>
-  <strong><a href="/home">BeWilder</a></strong>
-  <a href="/home" id="nav-home">Home</a>
-  <a href="/plant-scan" id="nav-scan">Scan Plant</a>
-  <a href="/plant-game" id="nav-berry">Berry Guess</a>
-</nav>
-
-<div id="map"></div>
-<div id="loading">Finding plants nearby…</div>
-<div id="error-banner"></div>
-<button id="view-nearby-btn">View Plants Nearby</button>
-<button id="hint-toggle">Guide</button>
-
-<div id="detail-panel">
-  <div id="detail-header">
-    <button id="detail-back">&gt; Back</button>
-    <span id="detail-title"></span>
-  </div>
-  <div id="detail-photo"><span id="detail-emoji">🌿</span></div>
-  <div id="detail-body">
-    <div>
-      <div id="detail-name"></div>
-      <div id="detail-sci"></div>
-    </div>
-    <div id="detail-tags"></div>
-    <div>
-      <div id="detail-info-header">INFORMATION:</div>
-      <div id="detail-description" style="margin-top:8px"></div>
-    </div>
-    <div id="detail-meta"></div>
-    <a id="detail-link" href="#" target="_blank">View full observation on iNaturalist →</a>
-  </div>
-</div>
-
-
-<div id="drawer">
-  <div id="drawer-header">
-    <strong>Nearby Plants</strong>
-    <button id="drawer-close">✕</button>
-  </div>
-  <div id="drawer-list"></div>
-</div>
-
-
-<div id="welcome-overlay">
-  <div id="welcome-modal">
-    <h2>Welcome to BeWilder</h2>
-    <p>Discover plants growing near you. Tap any pin on the map to learn about a plant. You could also use the "Scan Plant" feature in the nav bar.</p>
-    <div class="btn-row">
-      <button id="welcome-skip">Skip</button>
-      <button id="welcome-start">Show me around</button>
-    </div>
-  </div>
-</div>
-
-<div id="walkthrough-bar">
-  <span id="wt-text"></span>
-  <span id="wt-progress"></span>
-  <button id="wt-skip">Skip</button>
-  <button id="wt-next">Next</button>
-</div>
-
-<script>
 const isFirstVisit = !localStorage.getItem('BeWilder_visited');
-
 
 const map = L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -285,36 +10,62 @@ map.setView(userCenter, 14);
 let allObservations = [];
 
 const EDIBILITY = {
-  47602:  'edible',   // Stinging Nettle
-  60218:  'edible',   // Wild Blackberry
-  76958:  'edible',   // Dandelion
-  53370:  'edible',   // Garlic Mustard
-  48701:  'edible',   // Chickweed
-  55813:  'edible',   // Lamb's Quarters
-  50148:  'edible',   // Purslane
-  47157:  'edible',   // Wood Sorrel
-  58796:  'edible',   // Elderberry
-  47229:  'edible',   // Wild Strawberry
-  49743:  'edible',   // Hawthorn
-  61438:  'edible',   // Cleavers / Goosegrass
-  47223:  'edible',   // Red Clover
-  50303:  'edible',   // Plantain (broadleaf)
-  48591:  'edible',   // Fireweed
-  48537:  'edible',   // Cattail
-  62410:  'edible',   // Cow Parsley
-  47727:  'edible',   // Wild Garlic
-  // Toxic
-  50171:  'toxic',    // Deadly Nightshade
-  77378:  'toxic',    // Poison Hemlock
-  47727:  'toxic',    // Giant Hogweed (causes burns)
-  48678:  'toxic',    // Foxglove
-  52580:  'toxic',    // Lily of the Valley
-  56057:  'toxic',    // Monkshood / Wolfsbane
-  49643:  'toxic',    // Poison Ivy
-  77107:  'toxic',    // Death Camas
-  48735:  'toxic',    // Lords and Ladies
-  62024:  'toxic',    // Black Nightshade
-  47727:  'toxic',    // Yew
+  53413:  'edible',   // Salmonberry (Rubus spectabilis)
+  55847:  'edible',   // Salal (Gaultheria shallon)
+  53407:  'edible',   // Thimbleberry (Rubus parviflorus)
+  48207:  'edible',   // Red Huckleberry (Vaccinium parvifolium)
+  55966:  'edible',   // Evergreen Huckleberry (Vaccinium ovatum)
+  55778:  'edible',   // Saskatoon Berry (Amelanchier alnifolia)
+  53408:  'edible',   // Trailing Blackberry (Rubus ursinus)
+  60218:  'edible',   // Himalayan Blackberry (Rubus armeniacus)
+  53409:  'edible',   // Blackcap Raspberry (Rubus leucodermis)
+  58796:  'edible',   // Elderberry (Sambucus)
+  50274:  'edible',   // Red Elderberry (Sambucus racemosa)
+  47229:  'edible',   // Wild Strawberry (Fragaria virginiana)
+  62212:  'edible',   // Woodland Strawberry (Fragaria vesca)
+  48392:  'edible',   // Oregon Grape (Mahonia aquifolium)
+  54418:  'edible',   // Cascade Oregon Grape (Mahonia nervosa)
+  48868:  'edible',   // Osoberry / Indian Plum (Oemleria cerasiformis)
+  49743:  'edible',   // Hawthorn (Crataegus)
+  47924:  'edible',   // Chokecherry (Prunus virginiana)
+  48803:  'edible',   // Nootka Rose / Wild Rose hips (Rosa nutkana)
+  48591:  'edible',   // Fireweed (Epilobium angustifolium)
+  47602:  'edible',   // Stinging Nettle (Urtica dioica)
+  76958:  'edible',   // Dandelion (Taraxacum officinale)
+  48701:  'edible',   // Chickweed (Stellaria media)
+  55813:  'edible',   // Lamb's Quarters (Chenopodium album)
+  50148:  'edible',   // Purslane (Portulaca oleracea)
+  47157:  'edible',   // Wood Sorrel (Oxalis)
+  61438:  'edible',   // Cleavers / Goosegrass (Galium aparine)
+  47223:  'edible',   // Red Clover (Trifolium pratense)
+  50303:  'edible',   // Broadleaf Plantain (Plantago major)
+  48537:  'edible',   // Cattail (Typha)
+  53370:  'edible',   // Garlic Mustard (Alliaria petiolata)
+  47727:  'edible',   // Wild Garlic (Allium ursinum)
+  48386:  'edible',   // Miner's Lettuce (Claytonia perfoliata)
+  62410:  'edible',   // Cow Parsley (Anthriscus sylvestris)
+  54102:  'edible',   // Sheep Sorrel (Rumex acetosella)
+  50877:  'edible',   // Curly Dock (Rumex crispus)
+  48219:  'edible',   // Burdock (Arctium)
+  58722:  'edible',   // Sow Thistle (Sonchus)
+  47727:  'edible',   // Wild Mint (Mentha arvensis)
+  54038:  'edible',   // Self Heal (Prunella vulgaris)
+  48219:  'edible',   // Silverweed (Potentilla anserina)
+  53291:  'edible',   // Bracken Fern (Pteridium aquilinum)
+  47606:  'edible',   // Watercress (Nasturtium officinale)
+  47223:  'edible',   // Wild Violet (Viola)
+  // ── Toxic ──
+  50171:  'toxic',    // Deadly Nightshade (Atropa belladonna)
+  77378:  'toxic',    // Poison Hemlock (Conium maculatum)
+  48678:  'toxic',    // Foxglove (Digitalis purpurea)
+  52580:  'toxic',    // Lily of the Valley (Convallaria majalis)
+  56057:  'toxic',    // Monkshood / Wolfsbane (Aconitum)
+  49643:  'toxic',    // Poison Ivy (Toxicodendron radicans)
+  77107:  'toxic',    // Death Camas (Anticlea elegans)
+  48735:  'toxic',    // Lords and Ladies (Arum maculatum)
+  62024:  'toxic',    // Black Nightshade (Solanum nigrum)
+  52984:  'toxic',    // Water Hemlock (Cicuta)
+  57774:  'toxic',    // Baneberry (Actaea)
 };
 
 function getEdibilityTag(obs, wikiText = '') {
@@ -330,8 +81,8 @@ function getEdibilityTag(obs, wikiText = '') {
   const edibleKeywords = ['edible', 'eaten', 'food plant', 'forage', 'culinary', 'consumed', 'harvested for food'];
   const toxicKeywords  = ['toxic', 'poisonous', 'poison', 'fatal', 'lethal', 'dangerous if ingested', 'harmful'];
 
-  if (toxicKeywords.some(k => text.includes(k)))  return { label: 'Toxic',            cls: 'tag-toxic'   };
-  if (edibleKeywords.some(k => text.includes(k))) return { label: 'Edible',           cls: 'tag-edible'  };
+  if (toxicKeywords.some(k => text.includes(k)))  return { label: 'Toxic',             cls: 'tag-toxic'   };
+  if (edibleKeywords.some(k => text.includes(k))) return { label: 'Edible',            cls: 'tag-edible'  };
   return                                                  { label: 'Edibility Unknown', cls: 'tag-unknown' };
 }
 
@@ -365,7 +116,6 @@ async function openDetail(obs) {
     photoEl.innerHTML = `<span style="font-size:5rem">🌿</span>`;
   }
 
-  // Tags
   const tagsEl    = document.getElementById('detail-tags');
   const edibility = getEdibilityTag(obs, '');
   const season    = getSeasonTag();
@@ -432,10 +182,8 @@ async function loadPlants(lat, lng) {
       return;
     }
 
-    allObservations = data.results.filter(obs => {
-      const e = getEdibilityTag(obs, '');
-      return e.cls !== 'tag-unknown';
-    });
+    allObservations = data.results;
+
     if (!allObservations.length) {
       showError('No known edible or toxic plants found nearby. Try moving the map.');
       loading.style.display = 'none';
@@ -602,6 +350,3 @@ document.getElementById('welcome-skip').addEventListener('click', () => {
   document.getElementById('hint-toggle').style.display = 'block';
 });
 document.getElementById('hint-toggle').addEventListener('click', startWalkthrough);
-</script>
-</body>
-</html>

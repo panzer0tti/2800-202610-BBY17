@@ -1,0 +1,60 @@
+<%- include('./templates/header') %>
+
+<div style="position:relative; height: calc(100dvh - 56px - 56px); display:flex; flex-direction:column;">
+
+  <div id="map" style="flex:1;"></div>
+  <div id="loading">Finding plants nearby…</div>
+  <div id="error-banner"></div>
+  <button id="view-nearby-btn">View Plants Nearby</button>
+  <button id="hint-toggle">Guide</button>
+
+  <div id="detail-panel">
+    <div id="detail-header">
+      <button id="detail-back">&gt; Back</button>
+      <span id="detail-title"></span>
+    </div>
+    <div id="detail-photo"><span id="detail-emoji">🌿</span></div>
+    <div id="detail-body">
+      <div>
+        <div id="detail-name"></div>
+        <div id="detail-sci"></div>
+      </div>
+      <div id="detail-tags"></div>
+      <div>
+        <div id="detail-info-header">INFORMATION:</div>
+        <div id="detail-description" style="margin-top:8px"></div>
+      </div>
+      <div id="detail-meta"></div>
+      <a id="detail-link" href="#" target="_blank">View full observation on iNaturalist →</a>
+    </div>
+  </div>
+
+  <div id="drawer">
+    <div id="drawer-header">
+      <strong>Nearby Plants</strong>
+      <button id="drawer-close">✕</button>
+    </div>
+    <div id="drawer-list"></div>
+  </div>
+
+  <div id="welcome-overlay">
+    <div id="welcome-modal">
+      <h2>Welcome to BeWilder</h2>
+      <p>Discover plants growing near you. Tap any pin on the map to learn about a plant. You could also use the "Scan Plant" feature in the nav bar.</p>
+      <div class="btn-row">
+        <button id="welcome-skip">Skip</button>
+        <button id="welcome-start">Show me around</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="walkthrough-bar">
+    <span id="wt-text"></span>
+    <span id="wt-progress"></span>
+    <button id="wt-skip">Skip</button>
+    <button id="wt-next">Next</button>
+  </div>
+
+</div>
+
+<%- include('./templates/footer') %>

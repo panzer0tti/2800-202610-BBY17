@@ -128,9 +128,9 @@ app.get("/home", checkAuthentication, (req, res) => {
   HTMLRender(res, "home.html");
 });
 
-// Static Plant Map Page HTML Route
+// Plant Map Page Route
 app.get("/plant-map", checkAuthentication, (req, res) => {
-  HTMLRender(res, "plant-map.html");
+  renderPage(req, res, "plant-map", "Plant Map", ["plant-map.css"], ["plant-map.js"]);
 });
 
 // Static Plant Scan Page HTML Route
