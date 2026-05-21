@@ -48,6 +48,7 @@ const {backupLoginSubmit} = require("./public/js/authentication");
 const {displayUserInfo, updateUserInfo} = require("./public/js/profileData");
 const {uploadProfilePic, getProfilePic} = require("./public/js/profileData");
 const {verifyIdentity, changePasswordSubmit} = require("./public/js/changePassword");
+const {canChangePassword} = require("./public/js/changePassword");
 const {apiScan} = require("./public/js/plantScanAPI");
 const gameManager = require("./public/js/gameManager");
 
@@ -173,7 +174,7 @@ app.get("/changePassword", checkAuthentication, (req, res) => {
 app.post("/changePasswordSubmit", checkAuthentication, verifyIdentity);
 
 // Change Password Form Page
-app.get("/changePasswordForm", checkAuthentication, (req, res) => {
+app.get("/changePasswordForm", checkAuthentication, canChangePassword, (req, res) => {
   renderPage(req, res, "change-password-form", "Change Password");
 });
 
