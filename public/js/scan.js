@@ -20,61 +20,55 @@ backBtn.addEventListener('click', () => {
 });
 
 captureBtn.addEventListener('click', async () => {
+    // User Story 02: Show "Getting Location..." immediately while browser waits for GPS popup
+    document.getElementById('plant-name').innerText = "Getting Location...";
+    document.getElementById('result-box').style.display = 'block';
+    // Make sure old error button is tucked away
+    document.getElementById('try-again-btn').style.display = 'none';
 
     try {
-        // 1. Tell the user it's loading
+        const position = await getPlantLocation();
+        const { latitude: lat, longitude: lng } = position.coords;
+
+        // User Story 02: Switch text to "Scanning..." now that coordinates are found
         document.getElementById('plant-name').innerText = "Scanning...";
-        document.getElementById('result-box').style.display = 'block';
-        // 2. Fetch the live data from your backend API route
+
         const response = await fetch('/api/scan', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-            // If your backend expects a base64 image string from the canvas, 
-            // you would pass it in the body here.
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lat, lng })
         });
-        if (!response.ok) {
-            throw new Error('API server returned an error');
-        }
-        // 3. Grab the live JSON response data from the server
-        
-        const livePlantData = await response.json();
 
-        // 4. Populate your UI elements dynamically using the live server data
-        document.getElementById('plant-name').innerText = livePlantData.name;
-        document.getElementById('ripe-level').innerText = `Ripe Level: ${livePlantData.ripeStatus}`;
-        document.getElementById('season-indicator').innerText = `In Season: ${livePlantData.inSeason}`;
-        document.getElementById('safety-badge').innerText = livePlantData.safety.toUpperCase();
-        document.getElementById('confidence-level').innerText = livePlantData.confidence;
-        document.getElementById('lookalike-warning').innerHTML = `<strong>Lookalike Warning:</strong> ${livePlantData.lookalike}`;
-        document.getElementById('allergy-warning').innerHTML = `<strong>Allergy Warning:</strong> ${livePlantData.allergy}`;
-        document.getElementById('prep-guide').querySelector('p').innerText = livePlantData.prep;
+        if (!response.ok) throw new Error('API server error');
+
+        const livePlantData = await response.json();
+        updatePlantUI(livePlantData);
+
+        // User Story 01: Sync the freshly scanned plant to your map
+        await syncScanToMap(livePlantData, lat, lng);
 
     } catch (err) {
-
-        console.error("Failed to fetch live AI data:", err);
-        document.getElementById('plant-name').innerText = "Scan Failed";
-        document.getElementById('results').innerText = "Unable to connect to the AI API service.";
-
+        console.error("Scan Failed:", err);
+        document.getElementById('plant-name').innerText = "No results";
+        
+        // Show the Try Again refresh button ONLY on failure!
+        document.getElementById('try-again-btn').style.display = 'inline-block';
     }
 });
 
 startBtn.addEventListener('click', () => {
+    // CAMERA CODE GOES HERE:
     navigator.mediaDevices.getUserMedia({ video: true })
         .then((stream) => {
             video.srcObject = stream;
             video.style.display = "block";
-            // ADD THIS LINE HERE:
             captureBtn.style.display = "inline-block";
-
-            // Optional: Hide start button
             startBtn.style.display = "none";
             backBtn.style.display = 'inline-block';
         })
         .catch((err) => {
-            console.error("Camera error: ", err);
-            document.getElementById('results').innerText = "Camera access denied.";
+            console.error("Camera access denied or unavailable:", err);
+            alert("Please allow camera access to scan plants!");
         });
 });
 
@@ -104,7 +98,10 @@ uploadInput.addEventListener('change', async (event) => {
 
     } catch (err) {
         console.error(err);
-        document.getElementById('plant-name').innerText = "Scan Failed";
+        document.getElementById('plant-name').innerText = "No results";
+        
+        // Reveal the Try Again button here too if an uploaded file fails
+        document.getElementById('try-again-btn').style.display = 'inline-block';
     }
 });
 
@@ -115,7 +112,45 @@ function updatePlantUI(data) {
     document.getElementById('season-indicator').innerText = `In Season: ${data.inSeason}`;
     document.getElementById('safety-badge').innerText = data.safety.toUpperCase();
     document.getElementById('confidence-level').innerText = data.confidence;
+    
+    // NEW: Update Latitude and Longitude displays
+    if (data.lat && data.lng) {
+        document.getElementById('lat-display').innerText = data.lat.toFixed(4);
+        document.getElementById('lng-display').innerText = data.lng.toFixed(4);
+    }
+
     document.getElementById('lookalike-warning').innerHTML = `<strong>Lookalike Warning:</strong> ${data.lookalike}`;
     document.getElementById('allergy-warning').innerHTML = `<strong>Allergy Warning:</strong> ${data.allergy}`;
     document.getElementById('prep-guide').querySelector('p').innerText = data.prep;
+}
+
+function getPlantLocation() {
+    return new Promise((resolve, reject) => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        } else {
+            reject("Geolocation not supported");
+        }
+    });
+}
+
+async function syncScanToMap(plantData, lat, lng) {
+    try {
+        const response = await fetch('/api/map-data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: plantData.name,
+                ripeStatus: plantData.ripeStatus,
+                lat: lat,
+                lng: lng,
+                date: new Date()
+            })
+        });
+
+        if (!response.ok) throw new Error('Database map sync failed');
+        console.log("Marker successfully synced to the plant map database!");
+    } catch (err) {
+        console.error("Map syncing dropped:", err);
+    }
 }
