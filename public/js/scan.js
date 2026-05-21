@@ -49,9 +49,11 @@ captureBtn.addEventListener('click', async () => {
 
     } catch (err) {
         console.error("Scan Failed:", err);
+
+        // Show "No results" refresh button only when plant is unknown
         document.getElementById('plant-name').innerText = "No results";
         
-        // Show the Try Again refresh button ONLY on failure!
+        // Show the Try Again refresh button only when plant is unknown 
         document.getElementById('try-again-btn').style.display = 'inline-block';
     }
 });
@@ -154,3 +156,15 @@ async function syncScanToMap(plantData, lat, lng) {
         console.error("Map syncing dropped:", err);
     }
 }
+
+// Toggle the interactive hints banner when clicked
+document.getElementById('hint-toggle').addEventListener('click', () => {
+    const tipsBox = document.getElementById('helpful-tips-box');
+    
+    if (tipsBox.style.display === 'none') {
+        tipsBox.style.display = 'block';
+        tipsBox.scrollIntoView({ behavior: 'smooth' }); // Scrolls down to show it
+    } else {
+        tipsBox.style.display = 'none';
+    }
+});

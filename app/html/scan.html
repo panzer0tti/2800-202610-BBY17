@@ -38,6 +38,8 @@
          <button id="back" style="display: none;">Back</button>
          <input type="file" id="upload-plant" accept="image/*" style="display: none;">
          <label id="upload-label" for="upload-plant" class="btn-style">Upload Photo</label>
+
+         <button id="hint-toggle">💡 Helpful Tips</button>
       </div>
 
       <div id="result-box" style="display: none;">
@@ -95,15 +97,25 @@
       <p id="lookalike-warning"></p>
       <p id="allergy-warning"></p>
       <div id="prep-guide">
-         <strong>Preparation:</strong>
+
          <p></p>
       </div>
       </div>
 
       <button id="try-again-btn" class="btn-style" onclick="window.location.reload()" style="display: none;">Try Again</button>
 
+      <div id="helpful-tips-box" style="display: none; background-color: #ffffff; border: 2px solid #17a2b8; border-radius: 8px; padding: 15px; margin: 15px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left;">
+         <span style="font-size: 1.1em;"><strong>💡 Scanning Tips for Success:</strong></span>
+         <ul style="padding-left: 20px; margin-top: 8px; color: #444; line-height: 1.5;">
+            <li>Get closer to the plant leaves, flowers, or fruit so the camera is able to see clearly.</li>
+            <li>Ensure there is strong lighting and avoid heavy shadows.</li>
+            <li>Hold the camera still to reduce blurriness.</li>
+            <li>Keep the plant centered in view.</li>
+         </ul>
+      </div>
+
       <figcaption>
-         <div id="results">Ready to scan...</div>
+         <div id="results"></div>
       </figcaption>
    </figure>
    <div id="below">
