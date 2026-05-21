@@ -7,13 +7,13 @@ const router = express.Router();
 router.get("/", (req, res) => {
   const player = {
     level: 12,
-    currentExp: 1200,
-    expToNextLevel: 1500,
+    currentXP: 1200,
+    xpForNextLevel: 1500,
   };
 
-  const xpPercentage = (player.currentExp / player.expToNextLevel) * 100;
+  const xpPercentage = (player.currentXP / player.xpForNextLevel) * 100;
 
-  const remainingXP = player.expToNextLevel - player.currentExp;
+  const remainingXP = player.xpForNextLevel - player.currentXP;
 
   res.render("games", {
     title: "Plant Games",

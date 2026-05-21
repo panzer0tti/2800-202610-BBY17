@@ -1,183 +1,210 @@
-/* Default Desktop Layout */
-.search-bar {
-  order: 2;
-}
-
-.navbar-toggler {
-  order: 3;
-}
-/* Only For Desktop */
-@media (min-width: 992px) {
-  /* Ensures navbar content aligns properly*/
-  .navbar-collapse {
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-}
-
-/* Mobile Layout */
-@media (max-width: 992px) {
-  .navbar-collapse {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .search-bar {
-    order: 2;
-    width: 100%;
-    margin-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-  }
-
-  .navbar-toggler {
-    order: 3;
-    align-self: flex-end;
-    margin-top: 10px;
-  }
-}
-
+/* =========================
+   NAVBAR BASE
+========================= */
 .custom-header-bar {
-  background: #0e3125;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--bg-navbar);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  padding: 18px 9px;
 }
 
-/* BRAND */
+/* =========================
+   BRAND
+========================= */
 .title {
-  color: #da3e39;
-  font-weight: 800;
+  color: var(--title-text);
+  font-weight: 900;
   letter-spacing: 1px;
-  font-size: 1.4rem;
-  transition: all 0.25s ease;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .title:hover {
-  color: #862927d7;
-  transform: scale(1.05);
+  color: var(--title-hover);
+  transform: scale(1.06);
 }
 
-/* NAV LINKS */
+/* =========================
+   NAV LINKS
+========================= */
 .app-links {
-  color: #2d8a63;
-  padding: 8px 14px;
+  color: var(--link-text);
+  font-weight: 700;
   border-radius: 999px;
-  transition: all 0.25s ease;
-  margin: 0 4px;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
-/* hover effect = soft glow */
 .app-links:hover {
-  background-color: #144333;
-  color: #2d8a63;
-  box-shadow: 0 0 10px #1a5741c9;
+  background-color: var(--link-hover-bg);
+  color: var(--text-inverse);
   transform: translateY(-1px);
 }
 
-/* active page (optional class you can add later) */
 .app-links.active {
-  background-color: rgba(17, 156, 24, 0.25);
-  color: #faf7f2;
+  background-color: var(--forest-mid);
 }
 
-/* SEARCH BAR */
-form.d-flex input {
-  background-color: #144333;
-  border: 1px solid rgba(17, 156, 24, 0.3);
-  color: #faf7f2;
+.app-links.active:hover {
+  background-color: var(--forest-base);
+  color: var(--text-inverse);
+  font-weight: bolder;
+
+  transition: all 0.2s ease-in;
 }
 
-form.d-flex input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+/* =========================
+   SEARCH
+========================= */
+.search-input {
+  background-color: var(--search-bg);
+  border: 2px solid rgba(126, 226, 168, 0.35);
+  color: var(--search-text);
+  min-height: 42px;
 }
 
-form.d-flex input:focus {
-  background-color: #1a5741;
-  border-color: #267b59;
-  box-shadow: 0 0 8px #144333;
+.search-input:focus {
+  border-color: var(--accent-sun);
+  box-shadow: 0 0 0 3px rgba(255, 233, 166, 0.2);
 }
 
-/* SEARCH BUTTON */
-.btn-outline-success {
-  border-color: #267b59;
-  color: #6bb191;
+.search-btn {
+  min-height: 42px;
+  font-weight: 600;
 }
 
-.btn-outline-success:hover {
-  background-color: #2d8a63;
-  color: #144333;
+/* =========================
+   BUTTONS
+========================= */
+.btn-outline-forest {
+  border: 2px solid var(--submit-btn-outline);
+  color: var(--submit-btn-outline);
 }
 
-/* LOGOUT BUTTON */
-.btn-danger {
-  background-color: #e35b52;
+.btn-outline-forest:hover {
+  border: 2px solid var(--submit-hover-outline);
+  background-color: var(--submit-hover-bg);
+  color: var(--submit-hover);
+}
+
+.btn-logout {
+  background-color: var(--logout);
   border: none;
-  transition: all 0.25s ease;
 }
 
-.btn-danger:hover {
-  background-color: #862927;
-  transform: scale(1.05);
+.btn-logout:hover {
+  background-color: var(--logout-hover);
 }
 
-/* CUSTOM MOBILE TOGGLER */
+/* =========================
+   TOGGLER
+========================= */
 .custom-toggler {
   width: 44px;
   height: 40px;
-  box-shadow: 0 0 10px #14433329;
-  background-color: #144333b7;
+  background-color: var(--forest-base);
   position: relative;
-  transition: all 0.25s ease;
 }
 
-/* Hamburger lines */
 .custom-toggler span {
   position: absolute;
   left: 50%;
   width: 22px;
   height: 2px;
-  transform: translateX(-50%);
-  background-color: #6bb191;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  background-color: var(--forest-light);
+
+  transition: transform 1s ease-in-out;
 }
 
-/* Default positions (stacked evenly) */
 .custom-toggler span:nth-child(1) {
   top: 11px;
-}
+  transform-origin: 0 0;
+  transform: translateX(-50%);
 
+  transition-duration: 400ms;
+}
 .custom-toggler span:nth-child(2) {
   top: 19px;
-}
+  transform-origin: -50% 0%;
+  transform: translateX(-50%);
 
+  transition-duration: 400ms;
+}
 .custom-toggler span:nth-child(3) {
   top: 27px;
-}
+  transform-origin: 0 0;
+  transform: translateX(-50%);
 
-/* Hover effect */
-.custom-toggler:hover {
-  border: 1px solid #1f6b4e24;
-  border-radius: 10px;
-  background-color: #144333b7;
-  transform: scale(1.05);
+  transition-duration: 400ms;
 }
 
 /* OPEN STATE → Morph into X */
 .navbar-toggler[aria-expanded="true"] span:nth-child(1) {
-  top: 19px;
-  transform: translateX(-50%) rotate(45deg);
+  top: 20px;
+  left: 12px;
+
+  transform-origin: center;
+  transform: rotate(-45deg);
+
+  transition-duration: 0.4s;
 }
 
 .navbar-toggler[aria-expanded="true"] span:nth-child(2) {
   opacity: 0;
+
+  transform: rotate(0deg);
+
+  transition: opacity 0ms;
 }
 
 .navbar-toggler[aria-expanded="true"] span:nth-child(3) {
-  top: 19px;
-  transform: translateX(-50%) rotate(-45deg);
+  top: 20px;
+  left: 12px;
+
+  transform-origin: center;
+  transform: rotate(225deg);
+
+  transition-duration: 0.4s;
+}
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 992px) {
+  .navbar-nav {
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    min-width: 360px;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-btn {
+    flex: 0 0 110px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 991px) {
+  .app-links {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 }

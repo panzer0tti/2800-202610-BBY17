@@ -40,12 +40,22 @@ mongoose
     console.error("MongoDB connection failed: ", err);
   });
 
-const {checkAuthentication, alreadyLoggedIn,
-       renderPage, HTMLRender} = require("./public/js/appHelper");
-const {signupSubmit, loginSubmit,
-       backupLoginSubmit} = require("./public/js/authentication");
-const {displayUserInfo, updateUserInfo} = require("./public/js/profileData");
-const {verifyIdentity, changePasswordSubmit} = require("./public/js/changePassword");
+const {
+  checkAuthentication,
+  alreadyLoggedIn,
+  renderPage,
+  HTMLRender,
+} = require("./public/js/appHelper");
+const {
+  signupSubmit,
+  loginSubmit,
+  backupLoginSubmit,
+} = require("./public/js/authentication");
+const { displayUserInfo, updateUserInfo } = require("./public/js/profileData");
+const {
+  verifyIdentity,
+  changePasswordSubmit,
+} = require("./public/js/changePassword");
 const gameManager = require("./public/js/gameManager");
 
 // const {title} = require("process");
@@ -55,7 +65,6 @@ const navLinksUnauth = [
   { name: "Welcome", url: "/" },
   { name: "Sign Up", url: "/signup" },
   { name: "Log In", url: "/login" },
-  { name: "Backup Log In", url: "/backupLogin" },
 ];
 
 const navLinksAuth = [
@@ -161,7 +170,11 @@ app.get("/changePasswordForm", checkAuthentication, (req, res) => {
 });
 
 // Change Password Form Handler
-app.post("/changePasswordFormSubmit", checkAuthentication, changePasswordSubmit);
+app.post(
+  "/changePasswordFormSubmit",
+  checkAuthentication,
+  changePasswordSubmit,
+);
 
 // Logout Handler
 app.get("/logout", (req, res) => {
