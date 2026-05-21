@@ -136,9 +136,9 @@ app.get("/plant-map", checkAuthentication, (req, res) => {
   renderPage(req, res, "plant-map", "Plant Map", ["plant-map.css"], ["plant-map.js"]);
 });
 
-// Static Plant Scan Page HTML Route
+// Plant Scan Page Route
 app.get("/plant-scan", checkAuthentication, (req, res) => {
-  HTMLRender(res, "plant-scan.html");
+  renderPage(req, res, "plant-scan", "Scan Plant", ["plant-scan.css"], ["plant-scan.js"]);
 });
 
 // Plant Scan API Route

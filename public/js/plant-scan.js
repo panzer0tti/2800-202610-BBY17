@@ -107,9 +107,9 @@ function updatePlantUI(data) {
     document.getElementById('error-box').style.display = 'none';
     
     document.getElementById('plant-name').innerText = data.commonName || "Unknown Plant";
-    document.getElementById('scientific-name').innerText = `Scientific Name: ${data.speciesName || "Unknown"}`;
-    document.getElementById('ripe-level').innerText = `Ripe Level: ${data.ripeStatus}`;
-    document.getElementById('season-indicator').innerText = `In Season: ${data.inSeason}`;
+    document.getElementById('scientific-name').innerHTML = `<strong>Scientific Name:</strong> ${data.speciesName || "Unknown"}`;
+    document.getElementById('ripe-level').innerHTML = `<strong>Ripe Level:</strong> ${data.ripeStatus}`;
+    document.getElementById('season-indicator').innerHTML = `<strong>In Season:</strong> ${data.inSeason}`;
     
     // Combined safety and confidence on one line
     document.getElementById('safety-confidence').innerText = `${data.safety.toUpperCase()} - ${data.confidence}`;
