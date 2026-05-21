@@ -44,7 +44,8 @@ mongoose.connect(mongoURL)
 const {checkAuthentication, alreadyLoggedIn} = require("./public/js/appHelper");
 const {renderPage, HTMLRender} = require("./public/js/appHelper");
 const {signupSubmit, loginSubmit} = require("./public/js/authentication");
-const {backupLoginSubmit} = require("./public/js/authentication");
+const {backupLoginSubmit, deleteAccount} = require("./public/js/authentication");
+const {displayLoginHistory} = require("./public/js/authentication");
 const {displayUserInfo, updateUserInfo} = require("./public/js/profileData");
 const {uploadProfilePic, getProfilePic} = require("./public/js/profileData");
 const {verifyIdentity, changePasswordSubmit} = require("./public/js/changePassword");
@@ -69,7 +70,7 @@ const navLinksAuth = [
   {name: "My Plants", url: "/my-plants"},
   {name: "Encyclopedia", url: "/encyclopedia"},
   {name: "Plant Games", url: "/plant-game"},
-  {name: "Profile", url: "/profile"},
+  {name: "Settings", url: "/settings"},
   {name: "Logout", url: "/logout"}
 ];
 
@@ -152,6 +153,17 @@ app.get("/encyclopedia", checkAuthentication, (req, res) => {
 
 // Plant Games Page Route
 app.use("/plant-game", checkAuthentication, gameManager);
+
+// Settings Page Route
+app.get("/settings", checkAuthentication, (req, res) => {
+  renderPage(req, res, "settings", "Settings");
+});
+
+// Login History Page Route
+app.get("/login-history", checkAuthentication, displayLoginHistory);
+
+// Delete Account Handler
+app.post("/deleteAccount", checkAuthentication, deleteAccount);
 
 // Profile Page Route
 app.get("/profile", checkAuthentication, displayUserInfo);

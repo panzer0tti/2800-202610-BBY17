@@ -13,11 +13,7 @@ const userCollection = database.db(mongodb_database).collection('users');
 async function displayUserInfo(req, res) {
     const email = req.session.email;
     const user = await userCollection.findOne({email: email});
-    const userData = {
-        name: user.name,
-        location: user.city,
-        phoneNum: user.phoneNum
-    };
+    const userData = [user.name, user.email, user.city, user.phoneNum];
 
     renderPage(req, res, "profile", "Profile", [], ["profile.js"], userData);
 }
