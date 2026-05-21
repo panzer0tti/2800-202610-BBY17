@@ -114,13 +114,14 @@ form.d-flex input:focus {
 
 /* LOGOUT BUTTON */
 .btn-danger {
-  background-color: #e35b52;
+  background-color: var(--logout);
+  color: var(--forest-deep);
   border: none;
   transition: all 0.25s ease;
 }
 
 .btn-danger:hover {
-  background-color: #862927;
+  background-color: var(--logout-hover);
   transform: scale(1.05);
 }
 
