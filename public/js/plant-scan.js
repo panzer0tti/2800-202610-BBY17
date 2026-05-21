@@ -1,47 +1,57 @@
 const startBtn = document.getElementById('start-camera');
-const captureBtn = document.getElementById('capture-plant'); // Add this line
+const captureBtn = document.getElementById('capture-plant');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const backBtn = document.getElementById('back');
+const uploadLabel = document.getElementById('upload-label');
 
 backBtn.addEventListener('click', () => {
     const stream = video.srcObject;
     if (stream) {
-        stream.getTracks().forEach(track => track.stop()); // Stop hardware
+        stream.getTracks().forEach(track => track.stop());
     }
     video.srcObject = null;
 
-    // Toggle everything back
     video.style.display = 'none';
     captureBtn.style.display = 'none';
     backBtn.style.display = 'none';
     startBtn.style.display = 'block';
-    document.getElementById('results').innerText = "";
+    uploadLabel.style.display = 'block'; // Show upload button again
 });
 
 captureBtn.addEventListener('click', async () => {
     try {
-        // 1. Tell the user it's loading
+        // Prevent capture if video isn't fully loaded
+        if (video.videoWidth === 0 || video.videoHeight === 0) {
+            showScanError("Camera is still initializing. Please wait a moment.");
+            return;
+        }
+
         showScanningState();
         
-        // 2. Fetch the live data from your backend API route
-        const livePlantData = await scanPlant({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        canvas.toBlob(async (blob) => {
+            const formData = new FormData();
+            formData.append('plantImage', blob, 'camera-capture.jpg');
+
+            const livePlantData = await scanPlant({
+                method: 'POST',
+                body: formData
+            });
+
+            if (livePlantData) {
+                updatePlantUI(livePlantData);
             }
-            // If your backend expects a base64 image string from the canvas, 
-            // you would pass it in the body here.
-        });
+        }, 'image/jpeg');
 
-        // 3. Grab the live JSON response data from the server
-        // (already handled by scanPlant)
-
-        // 4. Populate your UI elements dynamically using the live server data
-        updatePlantUI(livePlantData);
     } catch (err) {
         console.error("Failed to fetch live AI data:", err);
-        showScanError();
+        showScanError("An unexpected error occurred during capture.");
     }
 });
 
@@ -50,16 +60,14 @@ startBtn.addEventListener('click', () => {
         .then((stream) => {
             video.srcObject = stream;
             video.style.display = "block";
-            // ADD THIS LINE HERE:
             captureBtn.style.display = "inline-block";
-
-            // Optional: Hide start button
             startBtn.style.display = "none";
             backBtn.style.display = 'inline-block';
+            uploadLabel.style.display = 'none'; // Hide upload button
         })
         .catch((err) => {
             console.error("Camera error: ", err);
-            document.getElementById('results').innerText = "Camera access denied.";
+            showScanError("Camera access denied.");
         });
 });
 
@@ -95,37 +103,66 @@ uploadInput.addEventListener('change', async (event) => {
 
 // 2. SHARED REUSABLE UI HELPER
 function updatePlantUI(data) {
+    // Hide error box if it was open from a previous scan
+    document.getElementById('error-box').style.display = 'none';
+    
     document.getElementById('plant-name').innerText = data.commonName || "Unknown Plant";
     document.getElementById('scientific-name').innerText = `Scientific Name: ${data.speciesName || "Unknown"}`;
     document.getElementById('ripe-level').innerText = `Ripe Level: ${data.ripeStatus}`;
     document.getElementById('season-indicator').innerText = `In Season: ${data.inSeason}`;
-    document.getElementById('safety-badge').innerText = data.safety.toUpperCase();
-    document.getElementById('confidence-level').innerText = data.confidence;
+    
+    // Combined safety and confidence on one line
+    document.getElementById('safety-confidence').innerText = `${data.safety.toUpperCase()} - ${data.confidence}`;
+    
     document.getElementById('lookalike-warning').innerHTML = `<strong>Lookalike Warning:</strong> ${data.lookalike}`;
     document.getElementById('allergy-warning').innerHTML = `<strong>Allergy Warning:</strong> ${data.allergy}`;
+    
+    // SHOW the prep guide now that we have data
+    document.getElementById('prep-guide').style.display = 'block'; 
     document.getElementById('prep-guide').querySelector('p').innerText = data.prep;
 }
 
 function showScanningState() {
-    document.getElementById('plant-name').innerText = "Scanning...";
+    // Hide error box while loading new scan
+    document.getElementById('error-box').style.display = 'none';
     document.getElementById('result-box').style.display = 'block';
+    document.getElementById('plant-name').innerText = "Scanning...";
+    
+    // HIDE the prep guide while scanning
+    document.getElementById('prep-guide').style.display = 'none';
+    
+    // Clear out residual UI data while scanning
+    document.getElementById('scientific-name').innerText = "";
+    document.getElementById('safety-confidence').innerText = "";
+    document.getElementById('lookalike-warning').innerHTML = "";
+    document.getElementById('allergy-warning').innerHTML = "";
+    document.getElementById('prep-guide').querySelector('p').innerText = "";
 }
 
 function showScanError(message = "Scan Failed") {
-    document.getElementById('plant-name').innerText = "Scan Failed";
-    document.getElementById('results').innerText = message;
+    // Hide all plant details so previous data doesn't bleed through
+    document.getElementById('result-box').style.display = 'none';
+    
+    // Show the dedicated error box with the "Error: " prefix
+    document.getElementById('error-box').style.display = 'block';
+    document.getElementById('error-message').innerText = message;
 }
 
 async function scanPlant(options = {}) {
     try {
         const response = await fetch('/scanningPlant', options);
+        const data = await response.json(); // Parse the response even if it's an error
+
+        // If the server sends a 500 error (like when Pl@ntNet finds no species)
         if (!response.ok) {
-            throw new Error('API error');
+            // Throw the custom error message sent from your Express backend
+            throw new Error(data.prep || 'AI service failed to identify the image.');
         }
 
-        const data = await response.json();
         return data;
     } catch (err) {
         console.error("Scan API error:", err);
+        showScanError(err.message);
+        return null;
     }
 }
