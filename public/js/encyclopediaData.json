@@ -1,12 +1,12 @@
 [
-  { "id": 1, "name": "Monstera Deliciosa", "type": "Indoor / Tropical", "description": "Famous for its iconic natural leaf holes.", "image": "/img/plants/monstera_deliciosa.jpg" },
-  { "id": 2, "name": "Snake Plant", "type": "Indoor / Succulent", "description": "Hardy plant that purifies the air.", "image": "/img/plants/snake_plant.jpg" },
-  { "id": 3, "name": "Pothos", "type": "Indoor / Vine", "description": "Fast-growing trailing vine.", "image": "/img/plants/pothos.jpg" },
-  { "id": 4, "name": "Fiddle Leaf Fig", "type": "Indoor / Tree", "description": "Large, glossy, violin-shaped leaves.", "image": "/img/plants/fiddle-leaf-fig.jpg" },
-  { "id": 5, "name": "Aloe Vera", "type": "Medicinal / Succulent", "description": "Soothing gel inside fleshy leaves.", "image": "/img/plants/aloe_vera.jpg" },
-  { "id": 6, "name": "Spider Plant", "type": "Indoor / Air Purifier", "description": "Arching leaves with baby plantlets.", "image": "/img/plants/spider_plant.jpg" },
-  { "id": 7, "name": "Peace Lily", "type": "Indoor / Flowering", "description": "Deep green foliage with white blooms.", "image": "/img/plants/peace_lily.jpg" },
-  { "id": 8, "name": "Boston Fern", "type": "Outdoor / Fern", "description": "Classic sprawling fronds.", "image": "/img/plants/boston_fern.jpg" },
-  { "id": 9, "name": "Lavender", "type": "Outdoor / Herb", "description": "Fragrant, soothing purple flowers.", "image": "/img/plants/lavender.jpg" },
-  { "id": 10, "name": "Rosemary", "type": "Outdoor / Perennial Herb", "description": "Needle-like evergreen herb.", "image": "/img/plants/rosemary.jpg" }
+  { "id": 1, "name": "Monstera Deliciosa", "type": "Indoor / Tropical", "description": "Famous for its iconic natural leaf holes.", "image": "/img/plants/monstera_deliciosa.jpg", "seasonalAvailability": "Year-round" },
+  { "id": 2, "name": "Snake Plant", "type": "Indoor / Succulent", "description": "Hardy plant that purifies the air.", "image": "/img/plants/snake_plant.jpg", "seasonalAvailability": "Year-round" },
+  { "id": 3, "name": "Pothos", "type": "Indoor / Vine", "description": "Fast-growing trailing vine.", "image": "/img/plants/pothos.jpg", "seasonalAvailability": "Year-round" },
+  { "id": 4, "name": "Fiddle Leaf Fig", "type": "Indoor / Tree", "description": "Large, glossy, violin-shaped leaves.", "image": "/img/plants/fiddle-leaf-fig.jpg", "seasonalAvailability": "Spring to Summer" },
+  { "id": 5, "name": "Aloe Vera", "type": "Medicinal / Succulent", "description": "Soothing gel inside fleshy leaves.", "image": "/img/plants/aloe_vera.jpg", "seasonalAvailability": "Spring to Fall" },
+  { "id": 6, "name": "Spider Plant", "type": "Indoor / Air Purifier", "description": "Arching leaves with baby plantlets.", "image": "/img/plants/spider_plant.jpg", "seasonalAvailability": "Year-round" },
+  { "id": 7, "name": "Peace Lily", "type": "Indoor / Flowering", "description": "Deep green foliage with white blooms.", "image": "/img/plants/peace_lily.jpg", "seasonalAvailability": "Spring to Fall" },
+  { "id": 8, "name": "Boston Fern", "type": "Outdoor / Fern", "description": "Classic sprawling fronds.", "image": "/img/plants/boston_fern.jpg", "seasonalAvailability": "Spring to Summer" },
+  { "id": 9, "name": "Lavender", "type": "Outdoor / Herb", "description": "Fragrant, soothing purple flowers.", "image": "/img/plants/lavender.jpg", "seasonalAvailability": "Summer" },
+  { "id": 10, "name": "Rosemary", "type": "Outdoor / Perennial Herb", "description": "Needle-like evergreen herb.", "image": "/img/plants/rosemary.jpg", "seasonalAvailability": "Spring to Fall" }
 ]
