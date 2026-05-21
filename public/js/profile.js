@@ -1,9 +1,9 @@
 console.log("Profile JS loaded");
 
-document.querySelector("#editButton").addEventListener("click", editUserInfo);
-function editUserInfo() {
+document.querySelector("#editButton").addEventListener("click", () => {
     document.getElementById("personalInfoFields").disabled = false;
-}
+    picControls.style.display = "flex";
+});
 
 const picControls = document.getElementById("pic-controls");
 const startCameraBtn = document.getElementById("start-camera-btn");
@@ -14,10 +14,6 @@ const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const uploadInput = document.getElementById("upload-pic");
 const profileImg = document.getElementById("profile-img");
-
-document.querySelector("#editButton").addEventListener("click", () => {
-    picControls.style.display = "flex";
-});
 
 startCameraBtn.addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({video: true})
