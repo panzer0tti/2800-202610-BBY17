@@ -1,5 +1,4 @@
-<%- include('./templates/header') %>
-
+<%- include("templates/header", {title: title, user: user}) %>
 <div style="position:relative; height: calc(100dvh - 56px - 56px); display:flex; flex-direction:column;">
 
   <div id="map" style="flex:1;"></div>
@@ -57,4 +56,4 @@
 
 </div>
 
-<%- include('./templates/footer') %>
+<%- include("templates/footer") %>
