@@ -1,24 +1,25 @@
 require('dotenv').config();
 const Joi = require("joi");
+const {Binary} = require('mongodb');
+const fs = require('fs');
 
 const mongodb_database = process.env.MONGODB_DATABASE;
 
 const {database} = require('./mongoDBConnection');
 const {sendErrorMessage} = require('./authentication');
+const {renderPage} = require('./appHelper');
 const userCollection = database.db(mongodb_database).collection('users');
 
 async function displayUserInfo(req, res) {
     const email = req.session.email;
     const user = await userCollection.findOne({email: email});
-    res.render("profile", {
-        title: "Profile",
-        user: req.session.authenticated,
-        cssFiles: [],
+    const userData = {
         name: user.name,
         location: user.city,
-        phoneNum: user.phoneNum,
-        jsFile: "profile.js"
-    });
+        phoneNum: user.phoneNum
+    };
+
+    renderPage(req, res, "profile", "Profile", [], ["profile.js"], userData);
 }
 
 async function updateUserInfo(req, res) {
@@ -78,4 +79,50 @@ function toTitleCase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-module.exports = {displayUserInfo, updateUserInfo};
+async function uploadProfilePic(req, res) {
+    try {
+        if (!req.file) {
+            return res.status(400).send("No file uploaded.");
+        }
+
+        const email = req.session.email;
+        
+        const imageBuffer = fs.readFileSync(req.file.path);
+        
+        await userCollection.updateOne(
+            {email: email},
+            {$set: { 
+                profilePic: {
+                    data: new Binary(imageBuffer),
+                    type: req.file.mimetype
+                }
+            }}
+        );
+
+        fs.unlinkSync(req.file.path);
+
+        res.status(200).send("Upload successful");
+    } catch (error) {
+        console.error("Error uploading profile picture:", error);
+        res.status(500).send("Internal server error");
+    }
+}
+
+async function getProfilePic(req, res) {
+    try {
+        const email = req.session.email;
+        const user = await userCollection.findOne({email: email});
+
+        if (user && user.profilePic?.data) {
+            res.set('Content-Type', user.profilePic?.type);
+            res.send(user.profilePic?.data.buffer);
+        } else {
+            res.redirect("/img/default-avatar.jpg");
+        }
+    } catch (error) {
+        console.error("Error fetching profile picture:", error);
+        res.status(500).send("Internal server error");
+    }
+}
+
+module.exports = {displayUserInfo, updateUserInfo, uploadProfilePic, getProfilePic};
