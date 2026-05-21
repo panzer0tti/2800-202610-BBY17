@@ -1,7 +1,16 @@
+main.main-content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+footer.mt-5 {
+  margin-top: 0 !important;
+}
+
 #map { flex: 1; min-height: 0; }
 
 #view-nearby-btn {
-  position: fixed;
+  position: absolute;
   bottom: 16px; left: 16px; right: 16px;
   z-index: 900;
   padding: 12px;
@@ -284,7 +293,7 @@
 }
 
 #walkthrough-bar {
-  position: fixed;
+  position: absolute;
   bottom: 70px; left: 16px; right: 16px;
   z-index: 1600;
   background: #0e3125;
