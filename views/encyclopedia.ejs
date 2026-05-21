@@ -1,9 +1,9 @@
 <%- include("templates/header", {title: title, user: user}) %>
-<main class="p-8">
-    <h2 class="text-3xl font-bold mb-4">Plant Encyclopedia</h2>
-    <input type="text" id="plantSearch" placeholder="이름으로 검색..." class="p-2 border">
-    
-    <div id="plantContainer" class="grid grid-cols-3 gap-4 mt-6">
-        </div>
-</main>
+<div class="container py-5">
+    <h2 class="display-6 fw-bold mb-4">Plant Encyclopedia</h2>
+    <input type="text" id="plantSearch" placeholder="Search for a plant name..." 
+           class="form-control form-control-lg mb-5 shadow-sm border-2">
+
+    <div id="plantContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+</div>
 <%- include("templates/footer") %>
