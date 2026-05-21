@@ -5,6 +5,8 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 const mongoose = require("mongoose");
 const mongoSanitizer = require("mongo-sanitizer").default;
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
 
 const app = express();
 const PORT = process.env.PORT || 2800;
@@ -44,6 +46,7 @@ const {renderPage, HTMLRender} = require("./public/js/appHelper");
 const {signupSubmit, loginSubmit} = require("./public/js/authentication");
 const {backupLoginSubmit} = require("./public/js/authentication");
 const {displayUserInfo, updateUserInfo} = require("./public/js/profileData");
+const {uploadProfilePic, getProfilePic} = require("./public/js/profileData");
 const {verifyIdentity, changePasswordSubmit} = require("./public/js/changePassword");
 const {apiScan} = require("./public/js/plantScanAPI");
 const gameManager = require("./public/js/gameManager");
@@ -139,7 +142,7 @@ app.get("/plant-scan", checkAuthentication, (req, res) => {
 });
 
 // Plant Scan API Route
-app.post("/scanningPlant", checkAuthentication, apiScan);
+app.post("/scanningPlant", checkAuthentication, upload.single('plantImage'), apiScan);
 
 // Plant Games Page Route
 app.use("/plant-game", checkAuthentication, gameManager);
@@ -147,8 +150,14 @@ app.use("/plant-game", checkAuthentication, gameManager);
 // Profile Page Route
 app.get("/profile", checkAuthentication, displayUserInfo);
 
+// Get Profile Picture Handler
+app.get("/getProfilePic", checkAuthentication, getProfilePic);
+
 // Update Profile Handler
 app.post("/updateProfile", checkAuthentication, updateUserInfo);
+
+// Change Profile Picture Handler
+app.post("/updateProfilePic", checkAuthentication, upload.single('profilePic'), uploadProfilePic);
 
 // Change Password Security Page
 app.get("/changePassword", checkAuthentication, (req, res) => {
