@@ -17,7 +17,6 @@ function alreadyLoggedIn(req, res, next) {
     next();
 }
 
-<<<<<<< HEAD
 function renderPage(req, res, page, title, cssFiles = [], jsFiles = [], userData = []) {
     res.render(page, {
         title: title,
@@ -25,13 +24,6 @@ function renderPage(req, res, page, title, cssFiles = [], jsFiles = [], userData
         cssFiles: cssFiles,
         jsFiles: jsFiles,
         userData: userData
-=======
-function renderPage(req, res, page, title, cssFiles = []) {
-    res.render(page, {
-        title: title,
-        user: req.session.authenticated,
-        cssFiles: cssFiles
->>>>>>> sal_welcomepage_EJS_JS_CSS
     });
 }
 
