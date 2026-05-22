@@ -148,8 +148,6 @@ app.get("/my-plants", checkAuthentication, (req, res) => {
     renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
 })
 
-app.use("/plant-game", gameManager);
-
 // Plant Scan API Route
 app.post("/scanningPlant", checkAuthentication, upload.single('plantImage'), apiScan);
 
