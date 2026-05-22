@@ -2,222 +2,168 @@
   title: "BeeWilder | Welcome"
 }) %>
 
-<header class="hero-section">
-  <div class="container">
-    <div class="row align-items-center min-vh-100 py-5">
-      <div class="col-lg-6 pt-5">
-        <p class="hero-kicker">
-          Safety-first plant discovery
-        </p>
+<main class="bw-page">
+  <header class="bw-hero d-flex align-items-center">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
 
-        <h1 class="display-3 fw-bold hero-title">
-          Explore local plants without guessing.
-        </h1>
+          <h1 class="bw-title">
+            Explore plants with <span>curiosity</span>, not guesswork.
+          </h1>
 
-        <p class="lead hero-copy">
-          BeeWilder helps users scan plants, check safety guidance,
-          save discoveries, and explore seasonal plant sightings.
-        </p>
+          <p class="bw-copy mt-4">
+            BeeWilder is a safety-first plant discovery app.
+            Scan or upload a plant photo, compare possible matches, review
+            confidence and risk notes, save discoveries, explore a seasonal
+            plant map, and build plant knowledge through games.
+          </p>
 
-        <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
-          <a
-            class="btn btn-success btn-lg px-4"
-            href="/signup"
-          >
-            Create an account
-          </a>
+          <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+            <a class="btn bw-btn-primary btn-lg px-4" href="/signup">
+              Join us!
+            </a>
 
-          <a
-            class="btn btn-outline-light btn-lg px-4"
-            href="/login"
-          >
-            Log in
-          </a>
+            <a class="btn bw-btn-outline btn-lg px-4" href="/login">
+              Log in
+            </a>
+          </div>
+
+          <div class="bw-warning bw-danger-warning mt-4">
+            <div class="d-flex gap-3">
+              <span class="warning-icon">!</span>
+              <p class="mb-0">
+                <strong>Safety first.</strong>
+                BeeWilder is a learning and decision-support tool. Never eat,
+                touch, or prepare a wild plant based on one scan alone.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <p class="small hero-warning mt-4 mb-0">
-          BeeWilder is a learning tool. Always verify unknown plants
-          before eating, touching, or preparing them.
-        </p>
-      </div>
-
-      <div class="col-lg-5 offset-lg-1 mt-5 mt-lg-0">
-        <div class="app-preview-card shadow-lg">
-          <div class="preview-header">
-            <span class="preview-dot"></span>
-            <span class="preview-dot"></span>
-            <span class="preview-dot"></span>
-          </div>
-
-          <div class="scan-preview">
-            <p class="small text-uppercase fw-bold mb-2">
-              Scan preview
-            </p>
-
-            <h2 class="h4 fw-bold mb-3">
-              Plant match found
-            </h2>
-
-            <div class="confidence-bar mb-3">
-              <div class="confidence-fill"></div>
+        <div class="col-lg-5 offset-lg-1">
+          <div class="bw-notebook field-card-lines p-4">
+            <div
+              class="d-flex justify-content-between align-items-center mb-4"
+            >
+              <span class="bw-tag">Procedure</span>
             </div>
 
-            <p class="mb-1">
-              Confidence
-              <span class="fw-bold">
-                82 percent
-              </span>
-            </p>
+            <h2 class="h3 fw-black mb-3">A safer first step outdoors.</h2>
 
-            <p class="safety-note mb-0">
-              Check lookalikes, season, and safety notes before
-              trusting this result.
-            </p>
-          </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="bw-card h-100">
+                  <span class="bw-icon">01</span>
+                  <h3 class="h6 fw-bold">Scan</h3>
+                  <p class="small mb-0">
+                    Capture a plant photo or upload one from your device.
+                  </p>
+                </div>
+              </div>
 
-          <div class="row g-3 mt-3">
-            <div class="col-6">
-              <div class="mini-card">
-                <p class="mini-number">
-                  24
-                </p>
+              <div class="col-6">
+                <div class="bw-card h-100">
+                  <span class="bw-icon">02</span>
+                  <h3 class="h6 fw-bold">Check</h3>
+                  <p class="small mb-0">
+                    Review confidence, warnings, and possible lookalikes.
+                  </p>
+                </div>
+              </div>
 
-                <p class="mini-label">
-                  Saved plants
-                </p>
+              <div class="col-6">
+                <div class="bw-card h-100">
+                  <span class="bw-icon">03</span>
+                  <h3 class="h6 fw-bold">Save</h3>
+                  <p class="small mb-0">
+                    Store useful discoveries in your personal plant journal.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="bw-card h-100">
+                  <span class="bw-icon">04</span>
+                  <h3 class="h6 fw-bold">Learn</h3>
+                  <p class="small mb-0">
+                    Explore maps, encyclopedia entries, and plant games.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="col-6">
-              <div class="mini-card">
-                <p class="mini-number">
-                  6
-                </p>
+            <hr>
 
-                <p class="mini-label">
-                  Map sightings
-                </p>
-              </div>
-            </div>
+            <p class="small text-muted mb-0">
+              Designed for students, hikers, foragers, and beginners who want
+              clearer plant information before making outdoor decisions.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main>
-  <section id="features" class="py-5">
+  <section id="features" class="bw-section">
     <div class="container">
-      <div class="text-center mb-5">
-        <p class="section-kicker">
-          What BeeWilder does
-        </p>
+      <div class="row align-items-end mb-4">
+        <div class="col-lg-7">
+          <h2 class="bw-section-title">
+            What BeeWilder does
+          </h2>
+        </div>
 
-        <h2 class="section-title">
-          One place for safer plant exploration.
-        </h2>
+        <div class="col-lg-5">
+          <p class="bw-copy mb-0">
+            BeeWilder does not replace expert judgement. It organizes plant
+            information into a clearer path, so users can slow down, compare,
+            learn, and avoid risky assumptions.
+          </p>
+        </div>
       </div>
 
       <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              01
-            </div>
-
-            <h3>
-              Scan plants
-            </h3>
-
-            <p>
-              Upload or scan a plant photo and view possible matches
-              during the prototype flow.
+        <div class="col-md-6 col-xl-3">
+          <article class="bw-card h-100">
+            <span class="bw-icon">📷</span>
+            <h3 class="h5 fw-bold">Plant scan</h3>
+            <p class="mb-0">
+              Scan or upload a plant photo and receive possible plant matches
+              with readable confidence guidance.
             </p>
           </article>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              02
-            </div>
-
-            <h3>
-              Check safety guidance
-            </h3>
-
-            <p>
-              Review confidence, warnings, and lookalikes before
-              making decisions.
+        <div class="col-md-6 col-xl-3">
+          <article class="bw-card h-100">
+            <span class="bw-icon">⚠</span>
+            <h3 class="h5 fw-bold">Risk notes</h3>
+            <p class="mb-0">
+              See warnings, lookalike reminders, ripeness notes, and basic
+              preparation cautions before trusting a result.
             </p>
           </article>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              03
-            </div>
-
-            <h3>
-              Explore the map
-            </h3>
-
-            <p>
-              Use location and seasonal context to learn what plants
-              may be nearby.
+        <div class="col-md-6 col-xl-3">
+          <article class="bw-card h-100">
+            <span class="bw-icon">🗺</span>
+            <h3 class="h5 fw-bold">Plant map</h3>
+            <p class="mb-0">
+              Explore nearby plant sightings, map pins, seasonal availability,
+              and location-based plant information.
             </p>
           </article>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              04
-            </div>
-
-            <h3>
-              Save discoveries
-            </h3>
-
-            <p>
-              Keep useful plant finds in My Plants so users can
-              revisit them later.
-            </p>
-          </article>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              05
-            </div>
-
-            <h3>
-              Use the encyclopedia
-            </h3>
-
-            <p>
-              Browse plant information and build identification
-              knowledge over time.
-            </p>
-          </article>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <article class="feature-card h-100">
-            <div class="feature-icon">
-              06
-            </div>
-
-            <h3>
-              Learn through games
-            </h3>
-
-            <p>
-              Practice plant knowledge through quizzes, challenges,
-              and progress-based learning.
+        <div class="col-md-6 col-xl-3">
+          <article class="bw-card h-100">
+            <span class="bw-icon">🌿</span>
+            <h3 class="h5 fw-bold">My Plants</h3>
+            <p class="mb-0">
+              Save discoveries into a personal field journal and filter by
+              plant type, safety level, location, or season.
             </p>
           </article>
         </div>
@@ -225,64 +171,107 @@
     </div>
   </section>
 
-  <section id="how-it-works" class="how-section py-5">
+  <section id="safety" class="bw-section pt-0">
     <div class="container">
-      <div class="row align-items-center g-5">
+      <div class="row g-4 align-items-stretch">
         <div class="col-lg-5">
-          <p class="section-kicker">
-            How it works
-          </p>
-
-          <h2 class="section-title">
-            Designed for beginners who want guidance.
-          </h2>
-
-          <p class="section-copy">
-            The Welcome page introduces the app, explains the main
-            features, and sends users to log in or create an account.
-          </p>
+          <div class="bw-warning h-100">
+            <p class="bw-kicker">Safety warning</p>
+            <h2 class="h3 fw-bold">BeeWilder helps you ask better questions.</h2>
+            <p>
+              It does not tell you something is safe to eat with certainty.
+              Users should always verify with trusted sources, local field
+              guides, knowledgeable people, and official safety information.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="bw-tag danger">Do not rely on one scan</span>
+              <span class="bw-tag warn">Check lookalikes</span>
+              <span class="bw-tag">Save notes</span>
+            </div>
+          </div>
         </div>
 
         <div class="col-lg-7">
-          <div class="step-list">
-            <div class="step-item">
-              <span>
-                1
-              </span>
+          <div class="accordion bw-accordion" id="safetyAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#safetyOne"
+                  aria-expanded="true"
+                  aria-controls="safetyOne"
+                >
+                  Why the app shows warnings
+                </button>
+              </h2>
 
-              <p>
-                Scan or upload a plant photo.
-              </p>
+              <div
+                id="safetyOne"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#safetyAccordion"
+              >
+                <div class="accordion-body">
+                  Many edible plants have unsafe lookalikes. BeeWilder surfaces
+                  risk notes and confidence language so users know when to slow
+                  down instead of assuming a result is correct.
+                </div>
+              </div>
             </div>
 
-            <div class="step-item">
-              <span>
-                2
-              </span>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#safetyTwo"
+                  aria-expanded="false"
+                  aria-controls="safetyTwo"
+                >
+                  What to verify before handling a plant
+                </button>
+              </h2>
 
-              <p>
-                Review possible matches and confidence.
-              </p>
+              <div
+                id="safetyTwo"
+                class="accordion-collapse collapse"
+                data-bs-parent="#safetyAccordion"
+              >
+                <div class="accordion-body">
+                  Compare leaf shape, stem texture, growth pattern, location,
+                  season, plant condition, and reliable identification sources.
+                  When unsure, leave the plant alone.
+                </div>
+              </div>
             </div>
 
-            <div class="step-item">
-              <span>
-                3
-              </span>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#safetyThree"
+                  aria-expanded="false"
+                  aria-controls="safetyThree"
+                >
+                  What BeeWilder is best used for
+                </button>
+              </h2>
 
-              <p>
-                Check safety notes before making decisions.
-              </p>
-            </div>
-
-            <div class="step-item">
-              <span>
-                4
-              </span>
-
-              <p>
-                Save the plant or explore nearby sightings.
-              </p>
+              <div
+                id="safetyThree"
+                class="accordion-collapse collapse"
+                data-bs-parent="#safetyAccordion"
+              >
+                <div class="accordion-body">
+                  BeeWilder is best for learning, organizing discoveries,
+                  comparing possible matches, and exploring seasonal plant
+                  information. It is not a substitute for expert identification.
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -290,23 +279,167 @@
     </div>
   </section>
 
-  <section id="safety" class="py-5">
+  <section id="app-sections" class="bw-section pt-0">
     <div class="container">
-      <div class="safety-callout">
-        <p class="section-kicker">
-          Important reminder
-        </p>
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-5">
+          <h2 class="bw-section-title">
+            What joining us allows you to do!
+          </h2>
+        </div>
 
-        <h2>
-          Never rely on one scan alone.
-        </h2>
+        <div class="col-lg-7">
+          <div class="bw-tab-shell p-3">
+            <ul
+              class="nav nav-pills bw-tabs gap-2 mb-3"
+              id="featureTabs"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="pill"
+                  data-bs-target="#scanTab"
+                  type="button"
+                  role="tab"
+                >
+                  Scan
+                </button>
+              </li>
 
-        <p class="mb-0">
-          Plant identification can affect real safety. Users should
-          verify results through trusted sources before eating,
-          touching, or preparing wild plants.
-        </p>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="pill"
+                  data-bs-target="#mapTab"
+                  type="button"
+                  role="tab"
+                >
+                  Map
+                </button>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="pill"
+                  data-bs-target="#libraryTab"
+                  type="button"
+                  role="tab"
+                >
+                  Library
+                </button>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="pill"
+                  data-bs-target="#learnTab"
+                  type="button"
+                  role="tab"
+                >
+                  Learn
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="scanTab" role="tabpanel">
+                <h3 class="h5 fw-bold">Plant Scan</h3>
+                <p class="mb-0">
+                  The scan feature is the starting point for possible plant
+                  identification, confidence scoring, and safety guidance.
+                </p>
+              </div>
+
+              <div class="tab-pane fade" id="mapTab" role="tabpanel">
+                <h3 class="h5 fw-bold">Plant Map</h3>
+                <p class="mb-0">
+                  The map helps users explore nearby plant sightings and learn
+                  what may be present or in season around them.
+                </p>
+              </div>
+
+              <div class="tab-pane fade" id="libraryTab" role="tabpanel">
+                <h3 class="h5 fw-bold">My Plants and Encyclopedia</h3>
+                <p class="mb-0">
+                  My Plants stores personal discoveries, while the encyclopedia
+                  gives users a broader reference point for known plants.
+                </p>
+              </div>
+
+              <div class="tab-pane fade" id="learnTab" role="tabpanel">
+                <h3 class="h5 fw-bold">Plant Games</h3>
+                <p class="mb-0">
+                  Games turn plant identification into practice, helping users
+                  build confidence through repetition and feedback.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="row g-4 mt-4">
+        <div class="col-md-4">
+          <article class="bw-card h-100">
+            <h3 class="h5 fw-bold">For beginners</h3>
+            <p class="mb-0">
+              Clear labels, step-by-step guidance, and safety-first wording
+              reduce confusion for first-time users.
+            </p>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="bw-card h-100">
+            <h3 class="h5 fw-bold">For outdoor users</h3>
+            <p class="mb-0">
+              The map helps hikers, students, and foragers learn
+              what is around them without assuming it is safe to consume.
+            </p>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="bw-card h-100">
+            <h3 class="h5 fw-bold">For returning users</h3>
+            <p class="mb-0">
+              Saved plants, profile tools, settings, and game progress support
+              repeat learning over time.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="bw-section pt-0">
+    <div class="container">
+      <div class="bw-panel">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <p class="bw-kicker">Purpose and goal</p>
+            <h2 class="bw-section-title">
+              BeeWilder exists to make plant discovery more responsible.
+            </h2>
+            <p class="bw-copy mb-0">
+              The goal is not to encourage risky foraging. The goal is to make
+              outdoor learning more structured by combining scanning, safety
+              prompts, map context, saved observations, encyclopedia reference,
+              and practice games in one app.
+            </p>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="bw-metric-grid">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </main>
