@@ -5,6 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+<<<<<<< HEAD
+=======
+    "dev": "nodemon app.js",
+>>>>>>> sal_welcomepage_EJS_JS_CSS
     "build:css": "tailwindcss -i ./src/tailwindInput.css -o ./public/tailwindOutput.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,11 +41,18 @@
     "mongodb": "^7.2.0",
     "mongoose": "^9.6.2",
     "multer": "^2.1.1",
+<<<<<<< HEAD
     "node.js": "^0.0.1-security",
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.5.0",
+<<<<<<< HEAD
+=======
+    "nodemon": "^3.1.14",
+>>>>>>> sal_welcomepage_EJS_JS_CSS
     "postcss": "^8.5.14",
     "prettier": "^3.8.3",
     "prettier-plugin-ejs": "^1.0.3",

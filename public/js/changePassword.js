@@ -9,6 +9,7 @@ const {database} = require('./mongoDBConnection');
 const {sendErrorMessage} = require('./authentication');
 const userCollection = database.db(mongodb_database).collection('users');
 
+<<<<<<< HEAD
 function canChangePassword(req, res, next) {
     if (!req.session.verified) {
         res.redirect("/changePassword");
@@ -17,6 +18,8 @@ function canChangePassword(req, res, next) {
     next();
 }
 
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 async function verifyIdentity(req, res) {
     const email = req.session.email;
     const question = req.body.question;
@@ -41,7 +44,10 @@ async function verifyIdentity(req, res) {
     }
 
     if (await bcrypt.compare(answer, user.answer)) {
+<<<<<<< HEAD
         req.session.verified = true;
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
         res.redirect("/changePasswordForm");
     } else {
         sendErrorMessage(req, res, "Incorrect Answer", ["Incorrect answer."], "/changePassword", "Change Password");
@@ -91,7 +97,10 @@ async function changePasswordSubmit(req, res) {
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
     await userCollection.updateOne({email: email}, {$set: {password: hashedPassword}});
     sendSuccessMessage(req, res, "Password Changed", ["Password changed successfully."], "/profile", "Profile");
+<<<<<<< HEAD
     req.session.verified = false;
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 }
 
 function findPasswordError(newPassword, confirmPassword) {
@@ -126,4 +135,8 @@ function sendSuccessMessage(req, res, title, message, link, button) {
     });
 }
 
+<<<<<<< HEAD
 module.exports = {verifyIdentity, changePasswordSubmit, canChangePassword};
+=======
+module.exports = {verifyIdentity, changePasswordSubmit};
+>>>>>>> sal_welcomepage_EJS_JS_CSS

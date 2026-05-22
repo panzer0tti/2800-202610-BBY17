@@ -1,21 +1,39 @@
 require('dotenv').config();
 const Joi = require("joi");
+<<<<<<< HEAD
 const {Binary} = require('mongodb');
 const fs = require('fs');
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 
 const mongodb_database = process.env.MONGODB_DATABASE;
 
 const {database} = require('./mongoDBConnection');
 const {sendErrorMessage} = require('./authentication');
+<<<<<<< HEAD
 const {renderPage} = require('./appHelper');
+=======
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 const userCollection = database.db(mongodb_database).collection('users');
 
 async function displayUserInfo(req, res) {
     const email = req.session.email;
     const user = await userCollection.findOne({email: email});
+<<<<<<< HEAD
     const userData = [user.name, user.email, user.city, user.phoneNum];
 
     renderPage(req, res, "profile", "Profile", [], ["profile.js"], userData);
+=======
+    res.render("profile", {
+        title: "Profile",
+        user: req.session.authenticated,
+        cssFiles: [],
+        name: user.name,
+        location: user.city,
+        phoneNum: user.phoneNum,
+        jsFile: "profile.js"
+    });
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 }
 
 async function updateUserInfo(req, res) {
@@ -75,6 +93,7 @@ function toTitleCase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+<<<<<<< HEAD
 async function uploadProfilePic(req, res) {
     try {
         if (!req.file) {
@@ -122,3 +141,6 @@ async function getProfilePic(req, res) {
 }
 
 module.exports = {displayUserInfo, updateUserInfo, uploadProfilePic, getProfilePic};
+=======
+module.exports = {displayUserInfo, updateUserInfo};
+>>>>>>> sal_welcomepage_EJS_JS_CSS

@@ -1,5 +1,6 @@
 console.log("Profile JS loaded");
 
+<<<<<<< HEAD
 document.querySelector("#editButton").addEventListener("click", () => {
     document.getElementById("personalInfoFields").disabled = false;
     picControls.style.display = "flex";
@@ -85,4 +86,9 @@ async function sendImageToServer(image, filename) {
     } finally {
         profileImg.style.opacity = "1";
     }
+=======
+document.querySelector("#editButton").addEventListener("click", editUserInfo);
+function editUserInfo() {
+  document.getElementById("personalInfoFields").disabled = false;
+>>>>>>> sal_welcomepage_EJS_JS_CSS
 }
