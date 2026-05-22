@@ -214,7 +214,7 @@ function makeNewSession(req, name, email, firstTime) {
 }
 
 async function addLoginSessionEvent(email) {
-    await loginHistory.insertOne({email: email, loginDate: new Date(), dateString: formatCurrentTime()});
+    await loginHistory.insertOne({email: email, loginDate: new Date(), dateString: formatCurrentTime(), timeZone: getTimeZone()});
 }
 
 function formatCurrentTime() {
@@ -227,16 +227,21 @@ function formatCurrentTime() {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
-        timeZone: 'America/Los_Angeles'
+        timeZone: getTimeZone()
     });
+}
+
+function getTimeZone() {
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return userTimeZone;
 }
 
 async function displayLoginHistory(req, res) {
     const email = req.session.email;
-    const pastLogins = await loginHistory.find({email: email}).sort({loginDate: -1}).toArray();
-    const loginDates = pastLogins.map(entry => entry.dateString);
+    const pastLogins = await loginHistory.find({email: email}).sort({loginDate: -1})
+                                         .project({dateString: 1, timeZone: 1, _id: 1}).toArray();
 
-    renderPage(req, res, "login-history", "Login History", [], [], loginDates);
+    renderPage(req, res, "login-history", "Login History", [], [], pastLogins);
 }
 
 async function deleteAccount(req, res) {

@@ -145,7 +145,7 @@ app.get("/plant-scan", checkAuthentication, (req, res) => {
 
 // My Plants Page Route
 app.get("/my-plants", checkAuthentication, (req, res) => {
-    renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
+  renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
 })
 
 // Plant Scan API Route
