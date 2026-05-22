@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Define the schema for static plant knowledge and identification clues
 const plantInfoSchema = new mongoose.Schema({
   plantId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,4 +22,5 @@ const plantInfoSchema = new mongoose.Schema({
   },
 });
 
+// Export the PlantInfo model bound to the plant_info collection
 module.exports = mongoose.model("PlantInfo", plantInfoSchema, "plant_info");

@@ -5,6 +5,7 @@ const PlantName = require("./plantName");
 const PlantInfo = require("./plantInfo");
 const {sendErrorMessage} = require("./authentication")
 
+// Retrieve a random plant from the database that hasn't been used in the current session
 async function getRandomPlant(req) {
   if (!req.session.usedPlants) {
     req.session.usedPlants = [];
@@ -41,9 +42,8 @@ async function getRandomPlant(req) {
   return plant;
 }
 
-/* Start Plant Quiz */
+// Initialize the plant quiz session and render the first question
 router.get("/", async (req, res) => {
-  /* Initializate session's plant storage */
   if (!req.session.usedPlants) {
     req.session.usedPlants = [];
   }
@@ -51,12 +51,10 @@ router.get("/", async (req, res) => {
   try {
     const plantName = await getRandomPlant(req);
 
-    // Find matching Plant's ID in plant_info
     const plantInfo = await PlantInfo.findOne({
       plantId: plantName._id,
     });
 
-    // Combine both plantName and plantInfo to get plant in Object form
     const plant = {
       ...(plantName ? plantName.toObject() : {}),
       ...(plantInfo ? plantInfo.toObject() : {}),
@@ -80,9 +78,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Check User's Guess
+// Evaluate the user's guess against the correct plant name and render the result
 router.post("/guess", async (req, res) => {
-  /* Initializate session's plant storage */
   if (!req.session.usedPlants) {
     req.session.usedPlants = [];
   }
@@ -127,12 +124,11 @@ router.post("/guess", async (req, res) => {
   }
 });
 
-/* Next Question Route */
+// Fetch a new random plant and render the next question in the quiz sequence
 router.get("/next", async (req, res) => {
   try {
     const plantName = await getRandomPlant(req);
 
-    // Kept consistent with how you query it in your other routes
     const plantInfo = await PlantInfo.findOne({
       plantId: plantName._id, 
     });
@@ -142,7 +138,6 @@ router.get("/next", async (req, res) => {
       ...(plantInfo ? plantInfo.toObject() : {}),
     };
 
-    // FIXED: Changed currentPlantId to currentPlantById
     req.session.currentPlantById = plantName._id.toString();
     req.session.correctPlant = plantName.commonName;
 

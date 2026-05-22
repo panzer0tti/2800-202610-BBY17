@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+// Middleware to ensure the user is authenticated before accessing a route
 function checkAuthentication(req, res, next) {
     if (!req.session.authenticated) {
         res.redirect("/");
@@ -9,6 +10,7 @@ function checkAuthentication(req, res, next) {
     next();
 }
 
+// Middleware to redirect already authenticated users away from login/signup pages
 function alreadyLoggedIn(req, res, next) {
     if (req.session.authenticated) {
         res.redirect("/home");
@@ -17,6 +19,7 @@ function alreadyLoggedIn(req, res, next) {
     next();
 }
 
+// Standardize page rendering with common variables like title and user state
 function renderPage(req, res, page, title, cssFiles = [], jsFiles = [], userData = []) {
     res.render(page, {
         title: title,
@@ -27,6 +30,7 @@ function renderPage(req, res, page, title, cssFiles = [], jsFiles = [], userData
     });
 }
 
+// Serve a static HTML file from the app directory
 function HTMLRender(res, htmlPath) {
     const filePath = path.join(__dirname, "..", "..", "app", "html", htmlPath);
     const html = fs.readFileSync(filePath, "utf8");

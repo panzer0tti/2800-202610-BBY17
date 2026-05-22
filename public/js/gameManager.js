@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-/* Define routes to game pages here */
+const guessPlantsGame = require("./guessPlantsGame.js");
 
-// Game's Main Page
+// Render the main games dashboard with the user's current level and experience progress
 router.get("/", (req, res) => {
   const player = {
     level: 12,
@@ -26,10 +26,6 @@ router.get("/", (req, res) => {
   });
 });
 
-// Plant Quiz Game Route
-const guessPlantsGame = require("./guessPlantsGame.js");
 router.use("/guess-plants", guessPlantsGame);
-
-// Ranked Match Game Route
 
 module.exports = router;

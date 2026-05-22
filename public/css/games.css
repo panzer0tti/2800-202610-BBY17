@@ -1,4 +1,4 @@
-/* Custom styles can be added here */
+/* ── Game Buttons ── */
 .game-btns {
   background-color: #497150;
   color: #121d14;
@@ -12,7 +12,7 @@
   transform: translateY(-2px);
 }
 
-/* smoother progress bar */
+/* ── Progress Bar ── */
 .progress-bar {
   transition: width 0.6s ease;
 }

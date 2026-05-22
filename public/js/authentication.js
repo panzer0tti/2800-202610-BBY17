@@ -13,6 +13,7 @@ const {renderPage} = require('./appHelper');
 const userCollection = database.db(mongodb_database).collection('users');
 const loginHistory = database.db(mongodb_database).collection('login_history');
 
+// Handle user registration, hash passwords, and create a new session
 async function signupSubmit(req, res) {
     var name = req.body.name;
     var email = req.body.email;
@@ -51,6 +52,7 @@ async function signupSubmit(req, res) {
     res.redirect('/home');
 }
 
+// Authenticate user credentials and establish a login session
 async function loginSubmit(req, res) {
   const email = req.body.email || "";
   const password = req.body.password || "";
@@ -91,6 +93,7 @@ async function loginSubmit(req, res) {
     }
 }
 
+// Authenticate users who forgot their password using a security question
 async function backupLoginSubmit(req, res) {
     var email = req.body.email;
     var question = req.body.question;
@@ -134,6 +137,7 @@ async function backupLoginSubmit(req, res) {
     }
 }
 
+// Validate signup inputs and return an array of error messages if any exist
 function findSignupError(name, email, password, question, answer) {
     let signupError = [];
     if (!question || emptyEntrySubmitted(name, email, password, question, answer)) {
@@ -163,6 +167,7 @@ function findSignupError(name, email, password, question, answer) {
     return signupError || null;
 }
 
+// Validate login inputs and return an array of error messages if any exist
 function findLoginError(email, password) {
     let loginError = [];
     if (email.length == 0 || password.length == 0) {
@@ -174,6 +179,7 @@ function findLoginError(email, password) {
     return loginError || null;
 }
 
+// Validate backup login inputs and return an array of error messages if any exist
 function findBackupLoginError(email, question, answer) {
     let backupLoginError = [];
     if (!question || email.length == 0 || question.length == 0 || answer.length == 0) {
@@ -185,6 +191,7 @@ function findBackupLoginError(email, question, answer) {
     return backupLoginError || null;
 }
 
+// Check if any of the required authentication fields are empty
 function emptyEntrySubmitted(name, email, password, question, answer) {
     return name.length == 0 ||
            email.length == 0 ||
@@ -193,6 +200,7 @@ function emptyEntrySubmitted(name, email, password, question, answer) {
            answer.length == 0;
 }
 
+// Render a standardized popup message for authentication errors
 function sendErrorMessage(req, res, title, message, link, button) {
     res.render("popup-message", {
         title: title,
@@ -205,6 +213,7 @@ function sendErrorMessage(req, res, title, message, link, button) {
     });
 }
 
+// Initialize session variables for an authenticated user
 function makeNewSession(req, name, email, firstTime) {
     req.session.authenticated = true;
     req.session.name = name;
@@ -213,10 +222,12 @@ function makeNewSession(req, name, email, firstTime) {
     req.session.cookie.maxAge = expireTime;
 }
 
+// Record the timestamp and timezone of a successful login event
 async function addLoginSessionEvent(email) {
     await loginHistory.insertOne({email: email, loginDate: new Date(), dateString: formatCurrentTime(), timeZone: getTimeZone()});
 }
 
+// Format the current date and time into a readable string
 function formatCurrentTime() {
     const currentTime = new Date();
     return currentTime.toLocaleString("en-US", {
@@ -231,11 +242,13 @@ function formatCurrentTime() {
     });
 }
 
+// Retrieve the user's current timezone
 function getTimeZone() {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return userTimeZone;
 }
 
+// Retrieve and render the user's past login history
 async function displayLoginHistory(req, res) {
     const email = req.session.email;
     const pastLogins = await loginHistory.find({email: email}).sort({loginDate: -1})
@@ -244,6 +257,7 @@ async function displayLoginHistory(req, res) {
     renderPage(req, res, "login-history", "Login History", [], [], pastLogins);
 }
 
+// Permanently remove a user's account and clear their session
 async function deleteAccount(req, res) {
     const email = req.session.email;
     if (email) {

@@ -1,3 +1,4 @@
+/* ── Variables & Theming ── */
 :root {
     --bw-dark: #3E3A36;
     --bw-wood: #6B4F3A;
@@ -13,6 +14,7 @@
     --bw-shadow: 0 1rem 2rem rgba(62, 58, 54, 0.1);
 }
 
+/* ── Global Layout ── */
 body {
     background:
         radial-gradient(
@@ -30,6 +32,7 @@ body {
     padding: 0 1rem 3rem;
 }
 
+/* ── Hero Section ── */
 .plants-hero {
     align-items: stretch;
     background:
@@ -71,6 +74,7 @@ body {
     max-width: 42rem;
 }
 
+/* ── Summary Stats ── */
 .plants-summary {
     display: grid;
     gap: 0.75rem;
@@ -95,6 +99,7 @@ body {
     margin: 0.25rem 0 0;
 }
 
+/* ── Toolbar & Filters ── */
 .plants-toolbar {
     align-items: end;
     background: white;
@@ -130,6 +135,7 @@ body {
     padding: 0.55rem 0.75rem;
 }
 
+/* ── Buttons ── */
 .toolbar-actions {
     display: flex;
     flex-wrap: wrap;
@@ -169,6 +175,7 @@ body {
     color: var(--bw-danger);
 }
 
+/* ── Empty State ── */
 .empty-state {
     background: white;
     border: 1px dashed var(--bw-tan);
@@ -193,6 +200,7 @@ body {
     max-width: 36rem;
 }
 
+/* ── Plant Cards Grid ── */
 .plants-grid {
     display: grid;
     gap: 1.25rem;
@@ -261,6 +269,7 @@ body {
     margin-bottom: 0;
 }
 
+/* ── Badges & Confidence Meters ── */
 .safety-badge {
     border-radius: 999px;
     flex: 0 0 auto;
@@ -316,6 +325,7 @@ body {
     width: 0;
 }
 
+/* ── Card Meta & Details ── */
 .plant-meta {
     border-top: 1px solid var(--bw-border);
     display: grid;
@@ -388,6 +398,7 @@ body {
     margin: 0;
 }
 
+/* ── Responsive & Media Queries ── */
 @media (max-width: 992px) {
     .plants-hero,
     .plants-toolbar {

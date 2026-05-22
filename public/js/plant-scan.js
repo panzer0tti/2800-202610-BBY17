@@ -16,25 +16,22 @@ backBtn.addEventListener('click', () => {
     captureBtn.style.display = 'none';
     backBtn.style.display = 'none';
     startBtn.style.display = 'block';
-    uploadLabel.style.display = 'block'; // Show upload button again
+    uploadLabel.style.display = 'block'; 
 });
 
 captureBtn.addEventListener('click', async () => {
     try {
-        // Prevent capture if video isn't fully loaded
         if (video.videoWidth === 0 || video.videoHeight === 0) {
             showScanError("Camera is still initializing. Please wait a moment.");
             return;
         }
 
-        // Show "Getting Location..." immediately while browser waits for GPS popup
         showScanningState();
         document.getElementById('plant-name').innerText = "Getting Location...";
 
         const position = await getPlantLocation();
         const { latitude: lat, longitude: lng } = position.coords;
 
-        // Switch text to "Scanning..." now that coordinates are found
         document.getElementById('plant-name').innerText = "Scanning...";
         
         canvas.width = video.videoWidth;
@@ -53,7 +50,6 @@ captureBtn.addEventListener('click', async () => {
             });
 
             if (livePlantData) {
-                // Pass coords to UI and Sync to Map
                 livePlantData.lat = lat;
                 livePlantData.lng = lng;
                 updatePlantUI(livePlantData);
@@ -75,7 +71,7 @@ startBtn.addEventListener('click', () => {
             captureBtn.style.display = "inline-block";
             startBtn.style.display = "none";
             backBtn.style.display = 'inline-block';
-            uploadLabel.style.display = 'none'; // Hide upload button
+            uploadLabel.style.display = 'none'; 
         })
         .catch((err) => {
             console.error("Camera error: ", err);
@@ -83,7 +79,6 @@ startBtn.addEventListener('click', () => {
         });
 });
 
-// 1. FILE UPLOAD EVENT LISTENER
 const uploadInput = document.getElementById('upload-plant');
 
 uploadInput.addEventListener('change', async (event) => {
@@ -112,16 +107,14 @@ uploadInput.addEventListener('change', async (event) => {
     }
 });
 
-// 2. SHARED REUSABLE UI HELPER
+// Update the user interface container displays with parsed plant data profiles
 function updatePlantUI(data) {
-    // Hide error box if it was open from a previous scan
     document.getElementById('error-box').style.display = 'none';
-    document.getElementById('try-again-btn').style.display = 'none'; // Hide Try Again button on success
+    document.getElementById('try-again-btn').style.display = 'none'; 
     
     document.getElementById('plant-name').innerText = data.commonName || "Unknown Plant";
     document.getElementById('scientific-name').innerHTML = `<strong>Scientific Name:</strong> ${data.speciesName || "Unknown"}`;
     
-    // REVEAL targeted UI elements
     document.getElementById('ripe-level').style.display = 'block';
     document.getElementById('season-indicator').style.display = 'block';
     document.getElementById('location-display').style.display = 'block';
@@ -129,10 +122,8 @@ function updatePlantUI(data) {
     document.getElementById('ripe-level').innerHTML = `<strong>Ripe Level:</strong> ${data.ripeStatus}`;
     document.getElementById('season-indicator').innerHTML = `<strong>In Season:</strong> ${data.inSeason}`;
     
-    // Combined safety and confidence on one line
     document.getElementById('safety-confidence').innerText = `${data.safety.toUpperCase()} - ${data.confidence}`;
     
-    // Update Latitude and Longitude displays
     if (data.lat && data.lng) {
         document.getElementById('lat-display').innerText = data.lat.toFixed(4);
         document.getElementById('lng-display').innerText = data.lng.toFixed(4);
@@ -141,26 +132,23 @@ function updatePlantUI(data) {
     document.getElementById('lookalike-warning').innerHTML = `<strong>Lookalike Warning:</strong> ${data.lookalike}`;
     document.getElementById('allergy-warning').innerHTML = `<strong>Allergy Warning:</strong> ${data.allergy}`;
     
-    // SHOW the prep guide now that we have data
     document.getElementById('prep-guide').style.display = 'block'; 
     document.getElementById('prep-guide').querySelector('p').innerText = data.prep;
 }
 
+// Reset data labels and clear interface containers to indicate active scanning loops
 function showScanningState() {
-    // Hide error box and try again button while loading new scan
     document.getElementById('error-box').style.display = 'none';
     document.getElementById('try-again-btn').style.display = 'none';
 
     document.getElementById('result-box').style.display = 'block';
     document.getElementById('plant-name').innerText = "Scanning...";
     
-    // HIDE targeted UI elements while scanning
     document.getElementById('prep-guide').style.display = 'none';
     document.getElementById('ripe-level').style.display = 'none';
     document.getElementById('season-indicator').style.display = 'none';
-    document.getElementById('location-display').style.display = 'none'; // Hides both lat and lng lines
+    document.getElementById('location-display').style.display = 'none'; 
     
-    // Clear out residual UI data while scanning
     document.getElementById('scientific-name').innerText = "";
     document.getElementById('safety-confidence').innerText = "";
     document.getElementById('lookalike-warning').innerHTML = "";
@@ -168,26 +156,23 @@ function showScanningState() {
     document.getElementById('prep-guide').querySelector('p').innerText = "";
 }
 
+// Display the error text container and prompt manual refresh choices
 function showScanError(message = "Scan Failed") {
-    // Hide all plant details so previous data doesn't bleed through
     document.getElementById('result-box').style.display = 'none';
     
-    // Show the dedicated error box with the "Error: " prefix
     document.getElementById('error-box').style.display = 'block';
     document.getElementById('error-message').innerText = message;
     
-    // Show the Try Again refresh button when plant is unknown/fails
     document.getElementById('try-again-btn').style.display = 'inline-block';
 }
 
+// Transmit image payloads to backend ingestion controllers to process AI evaluations
 async function scanPlant(options = {}) {
     try {
         const response = await fetch('/scanningPlant', options);
-        const data = await response.json(); // Parse the response even if it's an error
+        const data = await response.json(); 
 
-        // If the server sends a 500 error (like when Pl@ntNet finds no species)
         if (!response.ok) {
-            // Throw the custom error message sent from your Express backend
             throw new Error(data.prep || 'AI service failed to identify the image.');
         }
 
@@ -199,8 +184,7 @@ async function scanPlant(options = {}) {
     }
 }
 
-// --- LOCATION & MAP SYNC FEATURES ---
-
+// Wrap geolocation tracker calls inside an asynchronous promise shell
 function getPlantLocation() {
     return new Promise((resolve, reject) => {
         if ("geolocation" in navigator) {
@@ -211,6 +195,7 @@ function getPlantLocation() {
     });
 }
 
+// Post geographic markers and tracking details up to mapping databases
 async function syncScanToMap(plantData, lat, lng) {
     try {
         const response = await fetch('/api/map-data', {
@@ -232,7 +217,6 @@ async function syncScanToMap(plantData, lat, lng) {
     }
 }
 
-// Toggle the interactive hints banner when clicked
 const hintToggleBtn = document.getElementById('hint-toggle');
 if(hintToggleBtn) {
     hintToggleBtn.addEventListener('click', () => {
@@ -240,7 +224,7 @@ if(hintToggleBtn) {
         
         if (tipsBox.style.display === 'none') {
             tipsBox.style.display = 'block';
-            tipsBox.scrollIntoView({ behavior: 'smooth' }); // Scrolls down to show it
+            tipsBox.scrollIntoView({ behavior: 'smooth' }); 
         } else {
             tipsBox.style.display = 'none';
         }

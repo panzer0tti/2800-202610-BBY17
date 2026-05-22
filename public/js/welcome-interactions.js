@@ -1,8 +1,3 @@
-/*
- * BeeWilder Welcome Page Interactions
- * Works across all 16 welcome page experiments.
- * Requires no build step and does not change page content.
- */
 (function () {
     "use strict";
 
@@ -38,6 +33,7 @@
         ].join(",")
     };
 
+    // Execute the provided callback function once the DOM is fully loaded and safe to manipulate
     function ready(fn) {
         if (document.readyState === "loading") {
             document.addEventListener("DOMContentLoaded", fn);
@@ -47,6 +43,7 @@
         fn();
     }
 
+    // Initialize page transition states by applying layout-ready CSS classes to the body
     function enhanceBodyLoad() {
         document.body.classList.add("bw-js-enabled");
 
@@ -55,6 +52,7 @@
         });
     }
 
+    // Configure intersection observers to trigger CSS animations when elements scroll into view
     function enhanceScrollReveal() {
         const targets = Array.from(
             document.querySelectorAll(SELECTORS.animatedCards)
@@ -94,6 +92,7 @@
         });
     }
 
+    // Attach pointer and click event listeners to buttons to render interactive hover and ripple effects
     function enhanceButtons() {
         const buttons = Array.from(document.querySelectorAll(SELECTORS.buttons));
 
@@ -133,6 +132,7 @@
         });
     }
 
+    // Intercept standard anchor clicks to play a customized fade-out animation before navigating
     function enhancePageTransitions() {
         const links = Array.from(document.querySelectorAll("a[href]"));
 
@@ -167,6 +167,7 @@
         });
     }
 
+    // Apply a dynamic 3D tilt transformation to cards based on the pointer's coordinates
     function enhanceTiltCards() {
         const tiltTargets = Array.from(
             document.querySelectorAll(
@@ -199,6 +200,7 @@
         });
     }
 
+    // Re-trigger CSS pop animations whenever a Bootstrap tab pane becomes visible
     function enhanceTabs() {
         const tabButtons = Array.from(
             document.querySelectorAll('[data-bs-toggle="pill"], [data-bs-toggle="tab"]')
@@ -220,6 +222,7 @@
         });
     }
 
+    // Add a temporary pulsing glow effect to accordion headers when they are toggled
     function enhanceAccordion() {
         const accordionButtons = Array.from(
             document.querySelectorAll(".accordion-button")
@@ -236,6 +239,7 @@
         });
     }
 
+    // Synchronize hover states between interactive list items and corresponding map pin graphics
     function enhanceMapPins() {
         const pins = Array.from(document.querySelectorAll(".pin, .bw-map-pin"));
         const listItems = Array.from(document.querySelectorAll(".list-group-item-action"));
@@ -264,6 +268,7 @@
         });
     }
 
+    // Generate a randomized background particle layer for specific retro-themed pixel pages
     function enhancePixelMode() {
         const pixelPages = document.querySelectorAll(
             ".v7-pixel-camp, .v8-pixel-fieldbook, .bw-pixel-page"
@@ -287,6 +292,7 @@
         }
     }
 
+    // Flash highlighted metric numbers momentarily when they first enter the viewport
     function enhanceCounters() {
         const numbers = Array.from(
             document.querySelectorAll("strong, .metric, .stat-tile")
@@ -314,6 +320,7 @@
         });
     }
 
+    // Initialize all interactive features once the document is ready
     ready(function () {
         enhanceBodyLoad();
         enhanceScrollReveal();

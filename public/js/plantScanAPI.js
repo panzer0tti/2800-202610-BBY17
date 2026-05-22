@@ -3,9 +3,10 @@ require('dotenv').config();
 const fs = require("fs");
 const axios = require("axios");
 
-// ADDED THIS LINE: Require form-data package
+// Require form-data package to construct multipart/form-data payloads
 const FormData = require("form-data"); 
 
+// Transmit user-uploaded images to the Pl@ntNet API and format the identification results
 async function apiScan(req, res) {
     try {
         if (!req.file) {
