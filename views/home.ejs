@@ -1,0 +1,265 @@
+<%- include("templates/header", {
+  title: "BeeWilder | Home",
+  cssFiles: ["home.css"],
+  jsFiles: ["home.js"]
+}) %>
+
+<main class="home-page" data-page="home">
+  <section class="home-hero section-reveal">
+    <div class="container">
+      <div class="row align-items-center g-4 g-xl-5">
+        <div class="col-lg-7">
+          <p class="home-kicker">Logged-in field dashboard</p>
+
+          <h1 class="home-title">
+            Welcome back to <span>BeeWilder</span>.
+          </h1>
+
+          <p class="home-lead">
+            Use this dashboard as your base camp. From here, you can scan a
+            plant, check your saved discoveries, open the plant map, review the
+            encyclopedia, play learning games, or manage your profile and
+            settings.
+          </p>
+
+          <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+            <a class="btn home-btn-primary btn-lg" href="/plant-scan">
+              Scan a plant
+            </a>
+            <a class="btn home-btn-outline btn-lg" href="/my-plants">
+              Open My Plants
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <aside class="home-field-card tilt-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="home-tag">Safety note</span>
+              <span class="home-tag home-tag-warning">Required</span>
+            </div>
+
+            <h2 class="h4 fw-bold mb-3">
+              Always verify before handling or eating plants.
+            </h2>
+
+            <p class="mb-4">
+              BeeWilder supports learning and decision-making. It should not be
+              treated as proof that a wild plant is safe. Compare results with
+              field guides, expert advice, and official safety information.
+            </p>
+
+            <div class="home-mini-checklist">
+              <span>Check confidence level</span>
+              <span>Compare lookalikes</span>
+              <span>Review season and location</span>
+              <span>Save notes before acting</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section section-reveal" aria-labelledby="quick-actions-title">
+    <div class="container">
+      <div class="row align-items-end mb-4 g-3">
+        <div class="col-lg-7">
+          <p class="home-kicker">Quick access</p>
+          <h2 id="quick-actions-title" class="home-section-title">
+            Choose what you want to do next.
+          </h2>
+        </div>
+
+        <div class="col-lg-5">
+          <p class="home-muted mb-0">
+            Each card takes you to one of the main BeeWilder features. The goal
+            is to keep users oriented instead of making them hunt through menus.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/plant-scan">
+            <span class="home-action-icon">📷</span>
+            <span class="home-action-label">Plant scan</span>
+            <strong>Scan or upload a plant photo</strong>
+            <small>
+              Review possible matches, confidence guidance, safety warnings,
+              lookalike notes, and next steps.
+            </small>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/my-plants">
+            <span class="home-action-icon">🌿</span>
+            <span class="home-action-label">My Plants</span>
+            <strong>Review saved discoveries</strong>
+            <small>
+              Filter your plant journal by season, location, safety level,
+              edible status, or saved scan result.
+            </small>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/plant-map">
+            <span class="home-action-icon">🗺️</span>
+            <span class="home-action-label">Plant map</span>
+            <strong>Explore seasonal sightings</strong>
+            <small>
+              View nearby plant locations, map pins, seasonal availability, and
+              community or database-supported discoveries.
+            </small>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/encyclopedia">
+            <span class="home-action-icon">📖</span>
+            <span class="home-action-label">Encyclopedia</span>
+            <strong>Browse plant profiles</strong>
+            <small>
+              Learn plant names, traits, seasonality, basic safety notes, and
+              details that help you compare scan results.
+            </small>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/plant-game">
+            <span class="home-action-icon">🎮</span>
+            <span class="home-action-label">Games</span>
+            <strong>Practice plant knowledge</strong>
+            <small>
+              Use quizzes and game-style practice to build confidence with plant
+              identification and feature recognition.
+            </small>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <a class="home-action-card tilt-card" href="/profile">
+            <span class="home-action-icon">👤</span>
+            <span class="home-action-label">Profile</span>
+            <strong>Manage your account</strong>
+            <small>
+              Update profile information, review saved account details, and
+              access settings related to your BeeWilder experience.
+            </small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-section-tight section-reveal">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="home-panel h-100">
+            <p class="home-kicker">Suggested flow</p>
+            <h2 class="home-section-title small-title">
+              A safer plant discovery path.
+            </h2>
+            <p class="home-muted">
+              BeeWilder is designed to slow the user down. The app should help
+              users compare evidence rather than immediately trust a single
+              result.
+            </p>
+            <a class="btn home-btn-primary" href="/plant-scan">
+              Start with a scan
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="home-timeline">
+            <article class="home-timeline-item">
+              <span>1</span>
+              <div>
+                <h3>Scan or upload</h3>
+                <p>
+                  Begin with an image of a plant, fruit, leaf, or berry you
+                  want to learn more about.
+                </p>
+              </div>
+            </article>
+
+            <article class="home-timeline-item">
+              <span>2</span>
+              <div>
+                <h3>Review confidence and warnings</h3>
+                <p>
+                  Check the possible match, risk notes, and whether lookalikes
+                  or preparation concerns are mentioned.
+                </p>
+              </div>
+            </article>
+
+            <article class="home-timeline-item">
+              <span>3</span>
+              <div>
+                <h3>Save, compare, and learn</h3>
+                <p>
+                  Save discoveries to My Plants, compare with encyclopedia
+                  entries, then use games to practice identification.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section section-reveal">
+    <div class="container">
+      <div class="home-dashboard-grid">
+        <article class="home-stat-card">
+          <span class="home-stat-number">6</span>
+          <span class="home-stat-label">Core destinations</span>
+          <p>Scan, map, journal, encyclopedia, games, and profile.</p>
+        </article>
+
+        <article class="home-stat-card amber">
+          <span class="home-stat-number">4</span>
+          <span class="home-stat-label">Safety checks</span>
+          <p>Confidence, lookalikes, season, and handling caution.</p>
+        </article>
+
+        <article class="home-stat-card sky">
+          <span class="home-stat-number">1</span>
+          <span class="home-stat-label">Learning loop</span>
+          <p>Discover outdoors, save evidence, then practice indoors.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-section-tight section-reveal">
+    <div class="container">
+      <div class="home-cta-panel">
+        <div>
+          <p class="home-kicker">Ready to continue?</p>
+          <h2 class="home-section-title small-title mb-3">
+            Keep exploring, but keep safety first.
+          </h2>
+          <p class="home-muted mb-0">
+            Use BeeWilder to organize evidence, not to replace careful judgement.
+          </p>
+        </div>
+
+        <div class="home-cta-actions">
+          <a class="btn home-btn-primary" href="/plant-scan">Scan plant</a>
+          <a class="btn home-btn-outline" href="/settings">Settings</a>
+          <a class="btn home-btn-danger" href="/logout">Log out</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include("templates/footer") %>
