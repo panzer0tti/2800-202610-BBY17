@@ -1,0 +1,175 @@
+<%- include("templates/header", {title: "BeeWilder | My Plants"}) %>
+
+<section class="plants-page">
+    <section class="plants-hero">
+        <div>
+            <p class="eyebrow">Personal field journal</p>
+            <h1>My Plants</h1>
+            <p>
+                Review saved scan results, compare safety notes, and keep
+                track of the plants and berries you have discovered.
+            </p>
+        </div>
+
+        <div class="plants-summary" aria-label="My Plants summary">
+            <article>
+                <span id="saved-count">0</span>
+                <p>saved plants</p>
+            </article>
+
+            <article>
+                <span id="safe-count">0</span>
+                <p>low risk</p>
+            </article>
+
+            <article>
+                <span id="caution-count">0</span>
+                <p>use caution</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="plants-toolbar" aria-label="Plant filters">
+        <div class="search-group">
+            <label for="plant-search">Search saved plants</label>
+            <input
+                id="plant-search"
+                type="search"
+                placeholder="Search by name, type, or location"
+            >
+        </div>
+
+        <div class="filter-group">
+            <label for="safety-filter">Safety</label>
+            <select id="safety-filter">
+                <option value="all">All safety levels</option>
+                <option value="Low risk">Low risk</option>
+                <option value="Use caution">Use caution</option>
+                <option value="Do not consume">Do not consume</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="type-filter">Type</label>
+            <select id="type-filter">
+                <option value="all">All types</option>
+                <option value="Berry">Berry</option>
+                <option value="Flowering plant">Flowering plant</option>
+                <option value="Tree">Tree</option>
+                <option value="Herb">Herb</option>
+            </select>
+        </div>
+
+        <div class="toolbar-actions">
+            <button id="clear-filters" class="button secondary" type="button">
+                Clear filters
+            </button>
+
+            <button id="reset-demo-data" class="button primary" type="button">
+                Reset demo data
+            </button>
+        </div>
+    </section>
+
+    <section
+        id="empty-state"
+        class="empty-state"
+        hidden
+    >
+        <div class="empty-icon">🌱</div>
+        <h2>No saved plants yet</h2>
+        <p>
+            Saved scan results will appear here. For the prototype, use
+            Reset demo data to populate example plants.
+        </p>
+    </section>
+
+    <section
+        id="plants-grid"
+        class="plants-grid"
+        aria-live="polite"
+    ></section>
+
+    <template id="plant-card-template">
+        <article class="plant-card">
+            <div class="plant-image-wrap">
+                <img
+                    class="plant-image"
+                    src="/img/placeholder.jpg"
+                    alt="Saved plant"
+                >
+
+                <span class="plant-type-pill"></span>
+            </div>
+
+            <div class="plant-card-body">
+                <div class="plant-card-heading">
+                    <div>
+                        <h2 class="plant-name"></h2>
+                        <p class="scientific-name"></p>
+                    </div>
+
+                    <span class="safety-badge"></span>
+                </div>
+
+                <div class="confidence-wrap">
+                    <div class="confidence-topline">
+                        <span>Confidence</span>
+                        <strong class="confidence-value"></strong>
+                    </div>
+
+                    <div class="confidence-bar">
+                        <div class="confidence-fill"></div>
+                    </div>
+                </div>
+
+                <dl class="plant-meta">
+                    <div>
+                        <dt>Saved</dt>
+                        <dd class="saved-date"></dd>
+                    </div>
+
+                    <div>
+                        <dt>Location</dt>
+                        <dd class="plant-location"></dd>
+                    </div>
+
+                    <div>
+                        <dt>Season</dt>
+                        <dd class="plant-season"></dd>
+                    </div>
+                </dl>
+
+                <p class="plant-note"></p>
+
+                <div class="plant-tags"></div>
+
+                <div class="plant-actions">
+                    <button
+                        class="button secondary details-toggle"
+                        type="button"
+                    >
+                        View details
+                    </button>
+
+                    <button
+                        class="button danger remove-plant"
+                        type="button"
+                    >
+                        Remove
+                    </button>
+                </div>
+
+                <div class="plant-details" hidden>
+                    <h3>Safety reminder</h3>
+                    <p class="lookalike-note"></p>
+                </div>
+            </div>
+        </article>
+    </template>
+</section>
+
+<script src="/js/my-plants.js" defer></script>
+
+<%- include("templates/footer") %>

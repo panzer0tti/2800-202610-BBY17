@@ -2,29 +2,59 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-                <h2 class="mb-4 text-center">User Profile</h2>
+                <div class="d-flex align-items-center mb-4">
+                    <a href="/settings" class="btn btn-outline-secondary btn-sm me-3">&lt; Back</a>
+                    <h2 class="mb-0 text-center flex-grow-1 pe-5 fw-bold">User Profile</h2>
+                </div>
+                <div class="d-flex flex-column align-items-center mb-4">
+                    <img id="profile-img" src="/getProfilePic" alt="Profile Picture"
+                        style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #2e7d32;"
+                        class="rounded-circle shadow-sm mb-3">
+                    <div id="camera-container" style="display: none; width: 100%; max-width: 300px;">
+                        <video id="video" width="100%" autoplay playsinline class="rounded"
+                            style="border: 4px solid #2e7d32;"></video>
+                        <div class="d-flex gap-2 mt-2">
+                            <button id="capture-pic-btn" type="button" class="btn btn-primary w-50">Capture</button>
+                            <button id="cancel-camera-btn" type="button" class="btn btn-secondary w-50">Cancel</button>
+                        </div>
+                    </div>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div id="pic-controls" class="d-flex gap-2 mt-3" style="display: none;">
+                        <button id="start-camera-btn" type="button" class="btn btn-outline-success btn-sm">📷 Take
+                            Photo</button>
+                        <label for="upload-pic" class="btn btn-outline-secondary btn-sm mb-0">📁 Upload</label>
+                        <input type="file" id="upload-pic" accept="image/*" style="display: none;">
+                    </div>
+                </div>
                 <form action="/updateProfile" method="post">
                     <fieldset id="personalInfoFields" disabled>
                         <div class="mb-3">
                             <label class="form-label">
                                 <strong>Name</strong>
                             </label>
-                            <input type="text" id="nameInput" class="form-control"
-                                name="name" placeholder="Enter your name" value="<%= name %>" required />
+                            <input type="text" id="nameInput" class="form-control" name="name"
+                                placeholder="Enter your name" value="<%= userData[0] %>" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <strong>Email</strong>
+                            </label>
+                            <input type="email" id="emailInput" class="form-control" name="email"
+                                placeholder="" value="<%= userData[1] %>" disabled required/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">
                                 <strong>Location</strong>
                             </label>
-                            <input type="text" id="locationInput" class="form-control"
-                                name="location" placeholder="Eg. Vancouver" value="<%= location %>" />
+                            <input type="text" id="locationInput" class="form-control" name="location"
+                                placeholder="Eg. Vancouver" value="<%= userData[2] %>" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">
                                 <strong>Phone Number</strong>
                             </label>
-                            <input type="text" id="phoneInput" class="form-control" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
-                                name="phoneNum" placeholder="Eg. 123-456-7890" value="<%= phoneNum %>" />
+                            <input type="text" id="phoneInput" class="form-control" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                name="phoneNum" placeholder="Eg. 123-456-7890" value="<%= userData[3] %>" />
                         </div>
                     </fieldset>
                     <div class="d-flex gap-2 mt-4">
@@ -34,11 +64,6 @@
                         <button id="saveButton" type="submit" class="btn btn-primary w-50">
                             Save
                         </button>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="/changePassword" id="changePasswordButton" class="btn btn-danger w-100">
-                            Change Password
-                        </a>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,51 @@
+<%- include("templates/header", {title: title, user: user}) %>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                <h2 class="mb-4 text-center fw-bold">Account Settings</h2>
+                <div class="list-group shadow-sm mb-4">
+                    <a href="/profile" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                        <span><strong>Edit Profile</strong></span>
+                        <span class="text-muted">&gt;</span>
+                    </a>
+                    <a href="/changePassword" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                        <span><strong>Change Password</strong></span>
+                        <span class="text-muted">&gt;</span>
+                    </a>
+                    <a href="/login-history" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                        <span><strong>Login History</strong></span>
+                        <span class="text-muted">&gt;</span>
+                    </a>
+                </div>
+                <div class="list-group shadow-sm">
+                    <a href="/logout" class="list-group-item list-group-item-action p-3 text-center text-warning fw-bold">
+                        Logout
+                    </a>
+                    <button type="button" class="list-group-item list-group-item-action p-3 text-center text-danger fw-bold" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                        Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold" id="deleteAccountModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="mb-0">Are you absolutely sure you want to delete your account?</p>
+                    <p class="text-muted small mt-2">This action cannot be undone. All your saved data will be lost.</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <form action="/deleteAccount" method="POST" class="m-0">
+                        <button type="submit" class="btn btn-danger px-4">Delete My Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include("templates/footer") %>

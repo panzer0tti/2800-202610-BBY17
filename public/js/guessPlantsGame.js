@@ -18,6 +18,7 @@ async function getRandomPlant(req) {
 
   let plant = null;
 
+  let attempts = 0;
   for (let i = 0; i < 10; i++) {
     const random = Math.floor(Math.random() * total);
 
@@ -70,8 +71,8 @@ router.get("/", async (req, res) => {
       title: "Guess The Plant",
       user: req.session.authenticated,
       cssFiles: ["games.css"],
-      plant,
-      result: null,
+      plant: plant,
+      result: null
     });
   } catch (err) {
     console.error(err);
@@ -117,8 +118,8 @@ router.post("/guess", async (req, res) => {
       title: "Guess The Plant",
       user: req.session.authenticated,
       cssFiles: ["games.css"],
-      plant,
-      result,
+      plant: plant,
+      result: result
     });
   } catch (err) {
     console.error(err);
@@ -128,27 +129,34 @@ router.post("/guess", async (req, res) => {
 
 /* Next Question Route */
 router.get("/next", async (req, res) => {
-  const plantName = await getRandomPlant(req);
+  try {
+    const plantName = await getRandomPlant(req);
 
-  const plantInfo = await PlantInfo.findOne({
-    plantId: plantName._id.toString(),
-  });
+    // Kept consistent with how you query it in your other routes
+    const plantInfo = await PlantInfo.findOne({
+      plantId: plantName._id, 
+    });
 
-  const plant = {
-    ...plantName.toObject(),
-    ...(plantInfo ? plantInfo.toObject() : {}),
-  };
+    const plant = {
+      ...(plantName ? plantName.toObject() : {}),
+      ...(plantInfo ? plantInfo.toObject() : {}),
+    };
 
-  req.session.currentPlantId = plantName._id.toString();
-  req.session.correctPlant = plantName.commonName;
+    // FIXED: Changed currentPlantId to currentPlantById
+    req.session.currentPlantById = plantName._id.toString();
+    req.session.correctPlant = plantName.commonName;
 
-  res.render("guessPlant", {
-    title: "Guess The Plant",
-    user: req.session.authenticated,
-    cssFiles: ["games.css"],
-    plant,
-    result: null,
-  });
+    res.render("guessPlant", {
+      title: "Guess The Plant",
+      user: req.session.authenticated,
+      cssFiles: ["games.css"],
+      plant: plant,
+      result: null
+    });
+  } catch (err) {
+    console.error(err);
+    sendErrorMessage(req, res, "Error - Failed Loading Next Question", ["Loading Next Question Failed"], "/plant-game", "Games");
+  }
 });
 
 module.exports = router;

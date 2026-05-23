@@ -9,6 +9,14 @@ const {database} = require('./mongoDBConnection');
 const {sendErrorMessage} = require('./authentication');
 const userCollection = database.db(mongodb_database).collection('users');
 
+function canChangePassword(req, res, next) {
+    if (!req.session.verified) {
+        res.redirect("/changePassword");
+        return;
+    }
+    next();
+}
+
 async function verifyIdentity(req, res) {
     const email = req.session.email;
     const question = req.body.question;
@@ -33,6 +41,7 @@ async function verifyIdentity(req, res) {
     }
 
     if (await bcrypt.compare(answer, user.answer)) {
+        req.session.verified = true;
         res.redirect("/changePasswordForm");
     } else {
         sendErrorMessage(req, res, "Incorrect Answer", ["Incorrect answer."], "/changePassword", "Change Password");
@@ -82,6 +91,7 @@ async function changePasswordSubmit(req, res) {
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
     await userCollection.updateOne({email: email}, {$set: {password: hashedPassword}});
     sendSuccessMessage(req, res, "Password Changed", ["Password changed successfully."], "/profile", "Profile");
+    req.session.verified = false;
 }
 
 function findPasswordError(newPassword, confirmPassword) {
@@ -116,4 +126,4 @@ function sendSuccessMessage(req, res, title, message, link, button) {
     });
 }
 
-module.exports = {verifyIdentity, changePasswordSubmit};
+module.exports = {verifyIdentity, changePasswordSubmit, canChangePassword};
