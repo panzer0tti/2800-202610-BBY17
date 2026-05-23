@@ -56,7 +56,7 @@ node app.js
 
 Here is a quick scenario to get you started with BeeWilder:
 
-1. Open your browser and visit the local host URL (or live deployment link once available).
+1. Open your browser and visit the local host URL (or by going to `https://two800-202610-bby17-wpds.onrender.com/`).
 2. Navigate to the top-right of the welcome page and click **Sign Up**.
 3. Fill in the details to create a new account, and click sign up.
 4. Turn on the tooltips feature on the home page, and explore the page to familiarize yourself with the interface.
