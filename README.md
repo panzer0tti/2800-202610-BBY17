@@ -81,7 +81,6 @@ Here is a quick scenario to get you started with BeeWilder:
 │   │   │── home.html
 │   │   │── plant-map.html
 ├── node_modules/
-│
 ├── public/
 │   ├── css/
 │   │   │── games.css
