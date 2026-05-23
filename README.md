@@ -69,7 +69,120 @@ Here is a quick scenario to get you started with BeeWilder:
 
 ## Project Structure
 
-*(Insert your detailed project folder structure and file descriptions here)*
+```
+2800_202610_BBY17/
+├── .vscode/
+│   ├── settings.json
+├── app/
+│   ├── html/
+│   │   │── about.html
+│   │   │── encyclopedia.html
+│   │   │── games.html
+│   │   │── home.html
+│   │   │── plant-map.html
+├── node_modules/
+│
+├── public/
+│   ├── css/
+│   │   │── games.css
+│   │   │── home.css
+│   │   │── my-plants.css
+│   │   │── navbar.css
+│   │   │── plant-map.css
+│   │   │── plant-scan.css
+│   │   │── styles.css
+│   │   │── welcome.css
+│   ├── img/
+│   │   │── plants/
+│   │   │   │── bamboo_palm.jpg
+│   │   │   │── bird_of_paradise.jpg
+│   │   │   │── boston_fern.jpg
+│   │   │   │── cactus.jpg
+│   │   │   │── calathea.jpg
+│   │   │   │── dracaena.jpg
+│   │   │   │── fiddle_leaf.jpg
+│   │   │   │── jade_plant.jpg
+│   │   │   │── lavender.jpg
+│   │   │   │── monstera_deliciosa.jpg
+│   │   │   │── orchid.jpg
+│   │   │   │── peace_lily.jpg
+│   │   │   │── pothos.jpg
+│   │   │   │── red_spider_lily.jpg
+│   │   │   │── rose.jpg
+│   │   │   │── rosemary.jpg
+│   │   │   │── rubber_plant.jpg
+│   │   │   │── snake_plant.jpg
+│   │   │   │── spider_lily.jpg
+│   │   │   │── spider_plant.jpg
+│   │   │   │── zz_plant.jpg
+│   │   │── default-avatar.jpg
+│   │   │── placeholder.jpg
+│   ├── js/
+│   │   │── appHelper.js
+│   │   │── authentication.js
+│   │   │── bewilder-welcome.js
+│   │   │── changePassword.js
+│   │   │── encyclopedia.js
+│   │   │── encyclopediaData.json
+│   │   │── gameManager.js
+│   │   │── guessPlantsGame.js
+│   │   │── home.js
+│   │   │── levelUp.js
+│   │   │── mongoDBConnection.js
+│   │   │── my-plants.js
+│   │   │── plant-map.js
+│   │   │── plant-scan.js
+│   │   │── plantInfo.js
+│   │   │── plantName.js
+│   │   │── plantScanAPI.js
+│   │   │── profile.js
+│   │   │── profileData.js
+│   │   │── utils.js
+│   │   │── welcome-interactions.js
+│   │   │── welcome.js
+│   ├── tailwindOutput.css
+├── src/
+│   ├── tailwindInput.css
+├── uploads/
+├── views/
+│   ├── templates/
+│   │   │── footer.ejs
+│   │   │── header.ejs
+│   │   │── header2.ejs
+│   │   │── message-list.ejs
+│   │   │── navbar.ejs
+│   │   │── password-requirements.ejs
+│   │   │── publicpages_footer.ejs
+│   │   │── publicpages_header.ejs
+│   │   │── security-questions.ejs
+│   │── 404.ejs
+│   │── backup-login.ejs
+│   │── change-password-form.ejs
+│   │── change-password.ejs
+│   │── encyclopedia.ejs
+│   │── games.ejs
+│   │── guessPlant.ejs
+│   │── home.ejs
+│   │── login-history.ejs
+│   │── login.ejs
+│   │── my-plants.ejs
+│   │── plant-map.ejs
+│   │── plant-scan.ejs
+│   │── popup-message.ejs
+│   │── profile.ejs
+│   │── settings.ejs
+│   │── signup.ejs
+│   │── welcome.ejs
+├── .env
+├── .gitignore
+├── .prettierrc
+├── app.js
+├── package-lock.json
+├── package.json
+├── postcssconfig.js
+├── README.md
+├── tailwind.config.js
+```
 
 ---
 
