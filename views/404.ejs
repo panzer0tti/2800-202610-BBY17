@@ -1,36 +1,13 @@
 <%- include("templates/header", {title: title, user: user}) %>
-
-    <style>
-        /* Plant movement animation: Left to Right */
-        @keyframes move-plant {
-            from {
-                left: -50px;
-            }
-
-            /* Start from left side */
-            to {
-                left: 100%;
-            }
-
-            /* Move to right side */
-        }
-
-        .move {
-            animation: move-plant 2s linear infinite;
-        }
-    </style>
-
     <div class="container text-center my-5 py-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-
                 <h1 id="error-title" class="display-1 fw-bold text-danger" style="cursor: pointer;">404</h1>
                 <h2 class="mb-4">Page not found</h2>
                 <p class="lead mb-5">This page does not exist or has been moved.</p>
                 <a href="/" class="btn btn-primary btn-lg">Back to Home</a>
-
                 <div id="game-container"
-                    style="display: none; height: 150px; border: 2px dashed #999; position: relative; margin-top: 20px; overflow: hidden; border-radius: 10px;">
+                    style="display: none; height: 250px; border: 2px dashed #999; position: relative; margin-top: 20px; overflow: hidden; border-radius: 10px;">
                     <div id="score-board" style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">
                         Score: <span id="score">0</span>
                     </div>
@@ -42,52 +19,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-    const errorTitle = document.getElementById('error-title');
-    const gameContainer = document.getElementById('game-container');
-    const dino = document.getElementById('dino');
-    const plant = document.getElementById('plant');
-    const scoreElement = document.getElementById('score');
-
-    let isJumping = false;
-    let gameStarted = false;
-    let score = 0;
-
-    /**
-     * Executes the jump and adds points.
-     */
-    function jump() {
-        if (isJumping) return;
-
-        isJumping = true;
-        dino.style.bottom = "80px";
-        
-        // Add points only when a jump is initiated
-        score += 10;
-        scoreElement.innerText = score;
-
-        setTimeout(() => {
-            dino.style.bottom = "0px";
-            isJumping = false;
-        }, 400);
-    }
-
-    // 1. Click title to initialize and start the game
-    errorTitle.addEventListener('click', () => {
-        if (gameStarted) return; 
-        gameContainer.style.display = 'block';
-        plant.classList.add('move');
-        gameStarted = true; 
-        jump();
-    });
-
-    // 2. Trigger jump (and score) when Up Arrow key is pressed
-    document.addEventListener('keydown', (event) => {
-        if (event.key === "ArrowUp" && gameStarted) {
-            jump();
-        }
-    });
-</script>
 
     <%- include("templates/footer") %>

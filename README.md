@@ -83,6 +83,7 @@ Here is a quick scenario to get you started with BeeWilder:
 ├── node_modules/
 ├── public/
 │   ├── css/
+│   │   │── 404.css
 │   │   │── games.css
 │   │   │── home.css
 │   │   │── my-plants.css
@@ -117,6 +118,7 @@ Here is a quick scenario to get you started with BeeWilder:
 │   │   │── default-avatar.jpg
 │   │   │── placeholder.jpg
 │   ├── js/
+│   │   │── 404.js
 │   │   │── appHelper.js
 │   │   │── authentication.js
 │   │   │── bewilder-welcome.js
