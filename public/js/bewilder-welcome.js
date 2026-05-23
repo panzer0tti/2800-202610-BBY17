@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize intersection observer to reveal elements as they scroll into view
   const revealItems = document.querySelectorAll('.reveal, .bw-card, .step-card, .stat-mini');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15 });
   revealItems.forEach((item) => observer.observe(item));
 
+  // Attach a click event listener to buttons to create a material ripple effect
   document.querySelectorAll('.btn, .pixel-btn').forEach((button) => {
     button.classList.add('ripple-btn');
     button.addEventListener('click', (event) => {
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Apply an interactive 3D tilt effect to cards based on mouse cursor position
   document.querySelectorAll('[data-tilt]').forEach((card) => {
     card.addEventListener('mousemove', (event) => {
       const rect = card.getBoundingClientRect();
@@ -37,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Enable smooth scrolling behavior for internal anchor links
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const target = document.querySelector(link.getAttribute('href'));
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Stagger the floating animation start times for map pins
   document.querySelectorAll('.map-pin').forEach((pin, index) => {
     pin.style.animation = `floaty ${3 + index * .4}s ease-in-out infinite`;
   });

@@ -1,8 +1,7 @@
-/* Home */
-
 const FIRST_TIME_KEY = "bewilderFirstTimeMode";
 const TOUR_SEEN_KEY = "bewilderHomeTourSeen";
 
+// Retrieve the user's first-time guidance preference from local storage
 const getFirstTimeMode = () => {
   const storedPreference = localStorage.getItem(FIRST_TIME_KEY);
 
@@ -13,11 +12,13 @@ const getFirstTimeMode = () => {
   return storedPreference === "true";
 };
 
+// Save the user's first-time guidance preference and toggle the corresponding UI class
 const setFirstTimeMode = (isEnabled) => {
   localStorage.setItem(FIRST_TIME_KEY, String(isEnabled));
   document.body.classList.toggle("guidance-off", !isEnabled);
 };
 
+// Synchronize the first-time mode toggle switch with the stored user preference
 const syncFirstTimeToggle = () => {
   const toggle = document.querySelector("#first-time-toggle");
 
@@ -34,6 +35,7 @@ const syncFirstTimeToggle = () => {
   });
 };
 
+// Display the introductory home tour modal if the user hasn't seen it yet
 const showHomeTourIfNeeded = () => {
   const modal = document.querySelector("#tour-modal");
   const startButton = document.querySelector("#start-tour");
@@ -58,6 +60,7 @@ const showHomeTourIfNeeded = () => {
   });
 };
 
+// Briefly highlight the first tooltip target to draw the user's attention
 const pulseFirstTooltip = () => {
   if (!getFirstTimeMode()) {
     return;

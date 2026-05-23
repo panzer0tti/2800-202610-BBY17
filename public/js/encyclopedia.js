@@ -1,8 +1,10 @@
+// Fetch plant data and initialize the encyclopedia grid and search functionality
 async function renderPlants() {
     const response = await fetch('/js/encyclopediaData.json');
     const plants = await response.json();
     const container = document.getElementById('plantContainer');
 
+    // Generate HTML cards for the provided array of plant data and render them in the container
     function displayPlants(data) {
         container.innerHTML = '';
         data.forEach(plant => {
@@ -30,6 +32,7 @@ async function renderPlants() {
 
     displayPlants(plants);
 
+    // Filter the displayed plants dynamically based on the user's search input
     document.getElementById('plantSearch').addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
         const filtered = plants.filter(p => p.name.toLowerCase().includes(query));

@@ -63,6 +63,7 @@ const demoPlants = [
     }
 ]
 
+// Fetch saved plants from local storage or load fallback demo data
 function getSavedPlants()
 {
     const storedPlants = localStorage.getItem(STORAGE_KEY)
@@ -84,11 +85,13 @@ function getSavedPlants()
     }
 }
 
+// Update local storage with the revised array of plants
 function savePlants(plants)
 {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(plants))
 }
 
+// Determine the CSS class corresponding to the plant's safety status
 function getSafetyClass(safety)
 {
     if (safety === "Low risk")
@@ -109,6 +112,7 @@ function getSafetyClass(safety)
     return "safety-unknown"
 }
 
+// Generate an individual DOM element for a plant tag pill
 function createTagElement(tag)
 {
     const tagElement = document.createElement("span")
@@ -117,6 +121,7 @@ function createTagElement(tag)
     return tagElement
 }
 
+// Generate and configure a full plant card element from a collection entry template
 function renderPlantCard(plant)
 {
     const template = document.querySelector("#plant-card-template")
@@ -175,6 +180,7 @@ function renderPlantCard(plant)
     return card
 }
 
+// Filter the plants collection based on active search text and dropdown criteria
 function getFilteredPlants()
 {
     const searchValue = document
@@ -206,6 +212,7 @@ function getFilteredPlants()
     })
 }
 
+// Update dashboard numeric summaries for total, safe, and caution-level plant cards
 function updateSummary(plants)
 {
     document.querySelector("#saved-count").textContent = plants.length
@@ -217,6 +224,7 @@ function updateSummary(plants)
         plants.filter((plant) => plant.safety === "Use caution").length
 }
 
+// Render the filtered list of plant cards and manage empty grid layout visibilities
 function renderPlants()
 {
     const plantsGrid = document.querySelector("#plants-grid")
@@ -234,12 +242,14 @@ function renderPlants()
     })
 }
 
+// Overwrite current data with original demo parameters and refresh view
 function resetDemoData()
 {
     savePlants(demoPlants)
     renderPlants()
 }
 
+// Clear values from search inputs and reset structural filter query values
 function clearFilters()
 {
     document.querySelector("#plant-search").value = ""

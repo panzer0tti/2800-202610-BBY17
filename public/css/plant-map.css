@@ -1,3 +1,4 @@
+/* ── Base Layout & Map ── */
 main.main-content {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -32,7 +33,7 @@ footer.mt-5 {
   transform: translateY(-1px);
 }
 
-/* ── Loading / Error ── */
+/* ── Loading Error ── */
 #loading {
   position: absolute;
   top: 12px; left: 50%; transform: translateX(-50%);
@@ -242,6 +243,7 @@ footer.mt-5 {
 .drawer-item-sci   { font-size: 0.75rem; color: #6bb191; font-style: italic; }
 .drawer-item-date  { font-size: 0.72rem; color: #2d8a63; margin-top: 2px; }
 
+/* ── Welcome Modal ── */
 #welcome-overlay {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.6);
@@ -292,6 +294,7 @@ footer.mt-5 {
   color: #faf7f2;
 }
 
+/* ── Walkthrough Tutorial ── */
 #walkthrough-bar {
   position: absolute;
   bottom: 70px; left: 16px; right: 16px;

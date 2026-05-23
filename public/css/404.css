@@ -1,0 +1,14 @@
+/* ── Game Animations ── */
+@keyframes move-plant {
+    from {
+        left: -50px;
+    }
+    to {
+        left: 100%;
+    }
+}
+
+/* ── Game Elements ── */
+.move {
+    animation: move-plant 2s linear infinite;
+}

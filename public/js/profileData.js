@@ -10,6 +10,7 @@ const {sendErrorMessage} = require('./authentication');
 const {renderPage} = require('./appHelper');
 const userCollection = database.db(mongodb_database).collection('users');
 
+// Retrieve the authenticated user's details from the database and render the profile page
 async function displayUserInfo(req, res) {
     const email = req.session.email;
     const user = await userCollection.findOne({email: email});
@@ -18,6 +19,7 @@ async function displayUserInfo(req, res) {
     renderPage(req, res, "profile", "Profile", [], ["profile.js"], userData);
 }
 
+// Process and sanitize incoming form data to update the user's profile information
 async function updateUserInfo(req, res) {
     const email = req.session.email;
     const tempName = req.body.name;
@@ -35,6 +37,7 @@ async function updateUserInfo(req, res) {
     res.redirect("/profile");
 }
 
+// Validate profile update fields against predefined schema requirements
 function validateUserInfo(req, res, name, location, phoneNum) {
     const schema = Joi.object({
         name: Joi.string().max(20).required(),
@@ -51,6 +54,7 @@ function validateUserInfo(req, res, name, location, phoneNum) {
     return true;
 }
 
+// Generate specific error messages based on validation failures in the profile form
 function findProfileDataError(name, location, phoneNum) {
     let profileDataError = [];
     if (!name && !location && !phoneNum) {
@@ -71,10 +75,12 @@ function findProfileDataError(name, location, phoneNum) {
     return profileDataError || null;
 }
 
+// Utility function to convert strings to title case format
 function toTitleCase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+// Process an uploaded image file, convert it to a binary buffer, and store it in the database
 async function uploadProfilePic(req, res) {
     try {
         if (!req.file) {
@@ -104,6 +110,7 @@ async function uploadProfilePic(req, res) {
     }
 }
 
+// Retrieve and serve the user's stored profile picture, or fallback to a default avatar
 async function getProfilePic(req, res) {
     try {
         const email = req.session.email;

@@ -68,6 +68,7 @@ const EDIBILITY = {
   57774:  'toxic',    // Baneberry (Actaea)
 };
 
+// Evaluate observation taxon and summaries to return an edibility tag label and class
 function getEdibilityTag(obs, wikiText = '') {
   const taxonId = obs.taxon?.id;
 
@@ -86,6 +87,7 @@ function getEdibilityTag(obs, wikiText = '') {
   return                                                  { label: 'Edibility Unknown', cls: 'tag-unknown' };
 }
 
+// Generate an active season tag label based on the browser's current month context
 function getSeasonTag() {
   const month = new Date().getMonth();
   const season =
@@ -97,6 +99,7 @@ function getSeasonTag() {
 
 const detailPanel = document.getElementById('detail-panel');
 
+// Pop open the right details sliding sheet filled with iNaturalist and Wikipedia info
 async function openDetail(obs) {
   const name    = obs.taxon?.preferred_common_name || obs.taxon?.name || 'Unknown Plant';
   const sci     = obs.taxon?.name || '';
@@ -154,6 +157,7 @@ document.getElementById('detail-back').addEventListener('click', () => {
   detailPanel.classList.remove('open');
 });
 
+// Request localized flora sightings from iNaturalist surrounding targeted coordinates
 async function loadPlants(lat, lng) {
   const loading     = document.getElementById('loading');
   const errorBanner = document.getElementById('error-banner');
@@ -201,6 +205,7 @@ async function loadPlants(lat, lng) {
 
 const markerMap = {};
 
+// Place a clickable leaflet pin complete with picture and link onto the interactive canvas
 function addPin(obs) {
   if (!obs.location) return;
   const [lat, lng] = obs.location.split(',').map(Number);
@@ -226,6 +231,7 @@ window._openDetail = (id) => {
   if (obs) openDetail(obs);
 };
 
+// Populate and display the error notification layout across the main window
 function showError(msg) {
   const banner = document.getElementById('error-banner');
   banner.textContent = msg;
@@ -234,6 +240,7 @@ function showError(msg) {
 
 const drawer = document.getElementById('drawer');
 
+// Assemble structural lists for loaded vegetation inside the sliding bottom section
 function openDrawer() {
   drawer.classList.add('open');
   const list = document.getElementById('drawer-list');
@@ -316,17 +323,22 @@ const wtProg = document.getElementById('wt-progress');
 const wtNext = document.getElementById('wt-next');
 const wtSkip = document.getElementById('wt-skip');
 
+// Update tutorial interface elements to reflect active onboarding step states
 function showStep(i) {
   if (i >= steps.length) { endWalkthrough(); return; }
   wtText.textContent = steps[i].text;
   wtProg.textContent = `${i + 1} / ${steps.length}`;
   wtNext.textContent = i === steps.length - 1 ? 'Done' : 'Next';
 }
+
+// Close guided tutorial sequence and save onboarding milestone settings locally
 function endWalkthrough() {
   wtBar.classList.remove('active');
   localStorage.setItem('BeWilder_visited', '1');
   document.getElementById('hint-toggle').style.display = 'block';
 }
+
+// Reset tracker counters and present first welcome walkthrough instructional message
 function startWalkthrough() {
   currentStep = 0;
   wtBar.classList.add('active');

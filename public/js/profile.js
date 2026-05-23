@@ -1,5 +1,6 @@
 console.log("Profile JS loaded");
 
+// Enable personal info inputs and display picture upload controls when edit mode is triggered
 document.querySelector("#editButton").addEventListener("click", () => {
     document.getElementById("personalInfoFields").disabled = false;
     picControls.style.display = "flex";
@@ -15,6 +16,7 @@ const canvas = document.getElementById("canvas");
 const uploadInput = document.getElementById("upload-pic");
 const profileImg = document.getElementById("profile-img");
 
+// Request camera access and display the live video stream for profile picture capture
 startCameraBtn.addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({video: true})
         .then((stream) => {
@@ -30,6 +32,7 @@ startCameraBtn.addEventListener("click", () => {
 
 cancelCameraBtn.addEventListener("click", stopCamera);
 
+// Terminate the active camera stream and revert the UI to default picture controls
 function stopCamera() {
     const stream = video.srcObject;
     if (stream) {
@@ -40,6 +43,7 @@ function stopCamera() {
     picControls.style.display = "flex";
 }
 
+// Capture the current video frame to a canvas and upload it as a new profile picture
 captureBtn.addEventListener("click", () => {
     if (video.videoWidth === 0) {
         return;
@@ -56,6 +60,7 @@ captureBtn.addEventListener("click", () => {
     }, "image/jpeg");
 });
 
+// Handle manual file selection for profile picture uploads
 uploadInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -63,6 +68,7 @@ uploadInput.addEventListener("change", (event) => {
     }
 });
 
+// Transmit the selected image file to the backend via FormData to update the user profile
 async function sendImageToServer(image, filename) {
     const formData = new FormData();
     formData.append("profilePic", image, filename);

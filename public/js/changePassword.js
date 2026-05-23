@@ -9,6 +9,7 @@ const {database} = require('./mongoDBConnection');
 const {sendErrorMessage} = require('./authentication');
 const userCollection = database.db(mongodb_database).collection('users');
 
+// Middleware to ensure the user has verified their identity before accessing the change password form
 function canChangePassword(req, res, next) {
     if (!req.session.verified) {
         res.redirect("/changePassword");
@@ -17,6 +18,7 @@ function canChangePassword(req, res, next) {
     next();
 }
 
+// Verify the user's identity using their pre-configured security question and answer
 async function verifyIdentity(req, res) {
     const email = req.session.email;
     const question = req.body.question;
@@ -48,6 +50,7 @@ async function verifyIdentity(req, res) {
     }
 }
 
+// Validate security question inputs and return an array of error messages if any exist
 function findIdentityError(question, answer) {
     let identityError = [];
     if (!question || question.length == 0 || answer.length == 0) {
@@ -59,6 +62,7 @@ function findIdentityError(question, answer) {
     return identityError || null;
 }
 
+// Handle the password change request, validate the new password, and update the database
 async function changePasswordSubmit(req, res) {
     const email = req.session.email;
     const newPassword = req.body.newPassword;
@@ -94,6 +98,7 @@ async function changePasswordSubmit(req, res) {
     req.session.verified = false;
 }
 
+// Validate new password inputs and return an array of error messages if any exist
 function findPasswordError(newPassword, confirmPassword) {
     let passwordError = [];
     if (newPassword.length == 0 || confirmPassword.length == 0) {
@@ -114,6 +119,7 @@ function findPasswordError(newPassword, confirmPassword) {
     return passwordError || null;
 }
 
+// Render a standardized popup message for successful operations
 function sendSuccessMessage(req, res, title, message, link, button) {
     res.render("popup-message", {
         title: title,

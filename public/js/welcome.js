@@ -1,9 +1,3 @@
-/*
- * BeeWilder welcome page interactions.
- * Adds scroll reveals, gentle card tilt, button ripples,
- * tab motion, accordion pulse effects, and page transitions.
- */
-
 (function () {
   "use strict";
 
@@ -31,6 +25,7 @@
     ".accordion-button"
   ].join(",");
 
+  // Execute the provided callback function once the DOM is fully loaded and safe to manipulate
   function onReady(callback) {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", callback);
@@ -40,6 +35,7 @@
     callback();
   }
 
+  // Initialize page transition states by applying layout-ready CSS classes to the body
   function setupPageLoad() {
     document.body.classList.add("bw-js-enabled");
 
@@ -48,6 +44,7 @@
     });
   }
 
+  // Configure intersection observers to trigger CSS animations when elements scroll into view
   function setupScrollReveal() {
     const targets = Array.from(
       document.querySelectorAll(animatedSelectors)
@@ -88,6 +85,7 @@
     });
   }
 
+  // Attach click event listeners to buttons to render a material design ripple effect
   function setupButtonRipples() {
     const buttons = Array.from(
       document.querySelectorAll(interactiveSelectors)
@@ -120,6 +118,7 @@
     });
   }
 
+  // Intercept standard anchor clicks to play a customized fade-out animation before navigating
   function setupPageTransitions() {
     const links = Array.from(document.querySelectorAll("a[href]"));
 
@@ -156,6 +155,7 @@
     });
   }
 
+  // Apply a dynamic 3D tilt transformation to cards based on the pointer's coordinates
   function setupCardTilt() {
     const cards = Array.from(
       document.querySelectorAll(".bw-card, .bw-panel, .bw-step, .bw-notebook")
@@ -186,6 +186,7 @@
     });
   }
 
+  // Re-trigger CSS pop animations whenever a Bootstrap tab pane becomes visible
   function setupTabs() {
     const tabButtons = Array.from(
       document.querySelectorAll('[data-bs-toggle="pill"], [data-bs-toggle="tab"]')
@@ -207,6 +208,7 @@
     });
   }
 
+  // Add a temporary pulsing glow effect to accordion headers when they are toggled
   function setupAccordionPulse() {
     const accordionButtons = Array.from(
       document.querySelectorAll(".accordion-button")
@@ -223,6 +225,7 @@
     });
   }
 
+  // Flash highlighted metric numbers momentarily when they first enter the viewport
   function setupNumberFlash() {
     const elements = Array.from(
       document.querySelectorAll(".bw-metric strong, .bw-icon")
@@ -248,6 +251,7 @@
     });
   }
 
+  // Initialize all interactive features once the document is ready
   onReady(function () {
     setupPageLoad();
     setupScrollReveal();

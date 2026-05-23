@@ -1,4 +1,3 @@
-
 /*
   BeeWilder welcome page
   Theme: Modern Eco Field Guide
@@ -8,6 +7,7 @@
   sky #6FA8DC, amber #E3B341, coral #E35B52, red #C73E3A
 */
 
+/* ── Global Variables & Base Settings ── */
 :root {
   --bw-charcoal: #3E3A36;
   --bw-bark: #6B4F3A;
@@ -53,6 +53,7 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Page Transitions & States ── */
 body.bw-js-enabled {
   opacity: 0;
   transform: translateY(0.6rem);
@@ -74,6 +75,11 @@ body.bw-page-leaving {
     transform 0.22s ease;
 }
 
+.bw-page {
+  overflow: hidden;
+}
+
+/* ── Navigation ── */
 .welcome-nav {
   background: rgba(31, 107, 78, 0.94);
   border-bottom: 1px solid rgba(250, 247, 242, 0.16);
@@ -101,10 +107,7 @@ body.bw-page-leaving {
   color: var(--bw-deep);
 }
 
-.bw-page {
-  overflow: hidden;
-}
-
+/* ── Hero Section & Typography ── */
 .bw-hero {
   min-height: 100vh;
   padding-bottom: 4rem;
@@ -169,6 +172,7 @@ body.bw-page-leaving {
   max-width: 44rem;
 }
 
+/* ── Section Layout ── */
 .bw-section {
   padding: 5rem 0;
   position: relative;
@@ -182,6 +186,7 @@ body.bw-page-leaving {
   line-height: 1;
 }
 
+/* ── Cards, Panels & UI Shells ── */
 .bw-panel,
 .bw-card,
 .bw-warning,
@@ -227,6 +232,13 @@ body.bw-page-leaving {
   transform: translateY(-0.25rem);
 }
 
+.field-card-lines {
+  background-image:
+    linear-gradient(rgba(31, 107, 78, 0.08) 1px, transparent 1px);
+  background-size: 100% 2rem;
+}
+
+/* ── Icons & Buttons ── */
 .bw-icon {
   align-items: center;
   background: #DDF0E6;
@@ -271,6 +283,7 @@ body.bw-page-leaving {
   transform: translateY(-0.12rem);
 }
 
+/* ── Alerts & Badges ── */
 .bw-warning {
   background: #FFF9E7;
   border-color: rgba(227, 179, 65, 0.45);
@@ -314,12 +327,7 @@ body.bw-page-leaving {
   color: #893531;
 }
 
-.field-card-lines {
-  background-image:
-    linear-gradient(rgba(31, 107, 78, 0.08) 1px, transparent 1px);
-  background-size: 100% 2rem;
-}
-
+/* ── Steps ── */
 .bw-step {
   min-height: 100%;
 }
@@ -348,6 +356,7 @@ body.bw-page-leaving {
   margin-bottom: 0;
 }
 
+/* ── Interactive Components (Accordions & Tabs) ── */
 .bw-accordion .accordion-item {
   border: 1px solid rgba(31, 107, 78, 0.15);
   margin-bottom: 0.8rem;
@@ -380,6 +389,7 @@ body.bw-page-leaving {
   padding: 1rem;
 }
 
+/* ── Metrics Grid ── */
 .bw-metric-grid {
   display: grid;
   gap: 1rem;
@@ -405,13 +415,13 @@ body.bw-page-leaving {
   font-size: 0.9rem;
 }
 
+/* ── Footer ── */
 .welcome-footer {
   background: rgba(31, 107, 78, 0.08);
   color: var(--bw-muted);
 }
 
-/* Animation helpers used by welcome.js */
-
+/* ── Animation Classes ── */
 .bw-reveal {
   opacity: 0;
   transform: translateY(1.1rem);
@@ -461,6 +471,7 @@ body.bw-page-leaving {
   animation: bw-number-flash 0.6s ease;
 }
 
+/* ── Keyframes ── */
 @keyframes bw-ripple {
   to {
     opacity: 0;
@@ -507,6 +518,7 @@ body.bw-page-leaving {
   }
 }
 
+/* ── Media Queries ── */
 @media (max-width: 991px) {
   .bw-hero {
     min-height: auto;

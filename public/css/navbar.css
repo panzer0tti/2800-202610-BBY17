@@ -1,4 +1,4 @@
-/* Default Desktop Layout */
+/* ── Desktop Layout ── */
 .search-bar {
   order: 2;
 }
@@ -6,9 +6,8 @@
 .navbar-toggler {
   order: 3;
 }
-/* Only For Desktop */
+
 @media (min-width: 992px) {
-  /* Ensures navbar content aligns properly*/
   .navbar-collapse {
     display: flex !important;
     align-items: center;
@@ -17,7 +16,7 @@
   }
 }
 
-/* Mobile Layout */
+/* ── Mobile Layout ── */
 @media (max-width: 992px) {
   .navbar-collapse {
     flex-direction: column;
@@ -40,6 +39,7 @@
   }
 }
 
+/* ── Header & Brand ── */
 .custom-header-bar {
   background: #0e3125;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
@@ -47,7 +47,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* BRAND */
 .title {
   color: #da3e39;
   font-weight: 800;
@@ -61,7 +60,7 @@
   transform: scale(1.05);
 }
 
-/* NAV LINKS */
+/* ── Navigation Links ── */
 .app-links {
   color: #2d8a63;
   padding: 8px 14px;
@@ -70,7 +69,6 @@
   margin: 0 4px;
 }
 
-/* hover effect = soft glow */
 .app-links:hover {
   background-color: #144333;
   color: #2d8a63;
@@ -78,13 +76,12 @@
   transform: translateY(-1px);
 }
 
-/* active page (optional class you can add later) */
 .app-links.active {
   background-color: rgba(17, 156, 24, 0.25);
   color: #faf7f2;
 }
 
-/* SEARCH BAR */
+/* ── Search Bar & Button ── */
 form.d-flex input {
   background-color: #144333;
   border: 1px solid rgba(17, 156, 24, 0.3);
@@ -101,7 +98,6 @@ form.d-flex input:focus {
   box-shadow: 0 0 8px #144333;
 }
 
-/* SEARCH BUTTON */
 .btn-outline-success {
   border-color: #267b59;
   color: #6bb191;
@@ -112,7 +108,7 @@ form.d-flex input:focus {
   color: #144333;
 }
 
-/* LOGOUT BUTTON */
+/* ── Action Buttons ── */
 .btn-danger {
   background-color: #e35b52;
   border: none;
@@ -124,7 +120,7 @@ form.d-flex input:focus {
   transform: scale(1.05);
 }
 
-/* CUSTOM MOBILE TOGGLER */
+/* ── Mobile Toggler (Hamburger) ── */
 .custom-toggler {
   width: 44px;
   height: 40px;
@@ -134,7 +130,6 @@ form.d-flex input:focus {
   transition: all 0.25s ease;
 }
 
-/* Hamburger lines */
 .custom-toggler span {
   position: absolute;
   left: 50%;
@@ -146,7 +141,6 @@ form.d-flex input:focus {
   transition: all 0.3s ease;
 }
 
-/* Default positions (stacked evenly) */
 .custom-toggler span:nth-child(1) {
   top: 11px;
 }
@@ -159,7 +153,6 @@ form.d-flex input:focus {
   top: 27px;
 }
 
-/* Hover effect */
 .custom-toggler:hover {
   border: 1px solid #1f6b4e24;
   border-radius: 10px;
@@ -167,7 +160,6 @@ form.d-flex input:focus {
   transform: scale(1.05);
 }
 
-/* OPEN STATE → Morph into X */
 .navbar-toggler[aria-expanded="true"] span:nth-child(1) {
   top: 19px;
   transform: translateX(-50%) rotate(45deg);

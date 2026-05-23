@@ -1,3 +1,4 @@
+/* ── Environment & Module Dependencies ── */
 require("dotenv").config();
 
 const express = require("express");
@@ -8,6 +9,7 @@ const mongoSanitizer = require("mongo-sanitizer").default;
 const multer = require("multer");
 const upload = multer({dest: "uploads/"});
 
+/* ── Express Application Setup ── */
 const app = express();
 const PORT = process.env.PORT || 2800;
 
@@ -20,6 +22,7 @@ app.use(express.json());
 
 app.use(mongoSanitizer({replaceWith: "_"}));
 
+/* ── Database Connection ── */
 const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_host = process.env.MONGODB_HOST;
@@ -29,6 +32,7 @@ const node_session_secret = process.env.NODE_SESSION_SECRET;
 
 const mongoURL = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`;
 
+// Establish connection to the MongoDB Atlas cluster and start the Express server
 mongoose.connect(mongoURL)
     .then(() => {
         console.log("MongoDB is connected to the server.");
@@ -41,6 +45,7 @@ mongoose.connect(mongoURL)
         console.error("MongoDB connection failed: ", err);
     });
 
+/* ── Custom Module Imports ── */
 const {checkAuthentication, alreadyLoggedIn} = require("./public/js/appHelper");
 const {renderPage, HTMLRender} = require("./public/js/appHelper");
 const {signupSubmit, loginSubmit} = require("./public/js/authentication");
@@ -53,9 +58,7 @@ const {canChangePassword} = require("./public/js/changePassword");
 const {apiScan} = require("./public/js/plantScanAPI");
 const gameManager = require("./public/js/gameManager");
 
-// const {title} = require("process");
-// console.log(title);
-
+/* ── Global NavLinks ── */
 const navLinksUnauth = [
   {name: "Welcome", url: "/"},
   {name: "Sign Up", url: "/signup"},
@@ -74,6 +77,9 @@ const navLinksAuth = [
   {name: "Logout", url: "/logout"}
 ];
 
+/* ── Session & Middleware ── */
+
+// Inject dynamic routing paths and navigation arrays into local variables for EJS templates
 app.use((req, res, next) => {
   const pathFolders = req.path.split("/").slice(1);
   const folder = "/" + pathFolders[0];
@@ -99,12 +105,14 @@ app.use(
   }),
 );
 
-// Public Welcome Page Route
+/* ── App Routes ── */
+
+// Public Welcome Page
 app.get("/", alreadyLoggedIn, (req, res) => {
   res.render("welcome");
 });
 
-// Signup Page Route
+// Signup Page
 app.get("/signup", alreadyLoggedIn, (req, res) => {
   renderPage(req, res, "signup", "Sign Up");
 });
@@ -112,7 +120,7 @@ app.get("/signup", alreadyLoggedIn, (req, res) => {
 // Signup Handler
 app.post("/signupSubmit", signupSubmit);
 
-// Login Page Route
+// Login Page
 app.get("/login", alreadyLoggedIn, (req, res) => {
   renderPage(req, res, "login", "Log In");
 });
@@ -120,7 +128,7 @@ app.get("/login", alreadyLoggedIn, (req, res) => {
 // Login Handler
 app.post("/loginSubmit", loginSubmit);
 
-// Backup Login Page Route
+// Backup Login Page
 app.get("/backupLogin", alreadyLoggedIn, (req, res) => {
   renderPage(req, res, "backup-login", "Backup Log In");
 });
@@ -128,49 +136,49 @@ app.get("/backupLogin", alreadyLoggedIn, (req, res) => {
 // Backup Login Handler
 app.post("/backupLoginSubmit", backupLoginSubmit);
 
-// Static Homepage HTML Route
+// Static Homepage
 app.get("/home", checkAuthentication, (req, res) => {
   HTMLRender(res, "home.html");
 });
 
-// Plant Map Page Route
+// Plant Map Page
 app.get("/plant-map", checkAuthentication, (req, res) => {
   renderPage(req, res, "plant-map", "Plant Map", ["plant-map.css"], ["plant-map.js"]);
 });
 
-// Plant Scan Page Route
+// Plant Scan Page
 app.get("/plant-scan", checkAuthentication, (req, res) => {
   renderPage(req, res, "plant-scan", "Scan Plant", ["plant-scan.css"], ["plant-scan.js"]);
 });
 
-// My Plants Page Route
+// My Plants Page
 app.get("/my-plants", checkAuthentication, (req, res) => {
-    renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
+  renderPage(req, res, "my-plants", "My Plants", ["my-plants.css"], ["my-plants.js"]);
 })
 
-// Plant Scan API Route
+// Plant Scan API Handler
 app.post("/scanningPlant", checkAuthentication, upload.single('plantImage'), apiScan);
 
-// Encyclopedia Page Route
+// Encyclopedia Page
 app.get("/encyclopedia", checkAuthentication, (req, res) => {
   renderPage(req, res, "encyclopedia", "Plant Encyclopedia", ["encyclopedia.css"], ["encyclopedia.js"]);
 });
 
-// Plant Games Page Route
+// Plant Games Page
 app.use("/plant-game", checkAuthentication, gameManager);
 
-// Settings Page Route
+// Settings Page
 app.get("/settings", checkAuthentication, (req, res) => {
   renderPage(req, res, "settings", "Settings");
 });
 
-// Login History Page Route
+// Login History Page
 app.get("/login-history", checkAuthentication, displayLoginHistory);
 
 // Delete Account Handler
 app.post("/deleteAccount", checkAuthentication, deleteAccount);
 
-// Profile Page Route
+// Profile Page
 app.get("/profile", checkAuthentication, displayUserInfo);
 
 // Get Profile Picture Handler
@@ -207,5 +215,5 @@ app.get("/logout", (req, res) => {
 // 404 Page-not-found Page
 app.use((req, res) => {
   res.status(404);
-  renderPage(req, res, "404", "404 - Page not found");
+  renderPage(req, res, "404", "404 - Page not found", ["404.css"], ["404.js"]);
 });
